@@ -15,9 +15,11 @@
 .navbar {
   width: 100%;
   display: flex;
-  /* align-items: center;
-  justify-content: center; */
+position: fixed;
+top: 0;
+z-index: 999;
   border: 1px solid #eeeeee;
+  background-color: white;
   font-family: "Sometype Mono", monospace;
 }
 .navItem {
@@ -135,7 +137,7 @@
 .blog-main {
   width: 80%;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 80px;
   /* border: 1px solid black; */
 }
 .blog-section {

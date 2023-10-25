@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <!-- Corrected the URL here -->
+    <title>Sign In</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navItem">
+            <div class="leftnav">
+                <div class="logo">
+                    <a href="../index.html"><img src="../assets/images/logo.png" alt="" /></a>
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Search" />
+                </div>
+            </div>
+            <div class="rightNav">
+                <div class="write-box">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <p>Write</p>
+                </div>
+
+                <div class="signin">
+                    <a href="./signin.html"><button id="signin">Sign In</button></a>
+                </div>
+                <div class="signup">
+                    <a href="./signup.html"><button id="signup">Sign Up</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <div>
+            <h1>Join Us Today</h1>
+            <form id="login">
+                <div>
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="text" placeholder="Fullname" id="fullname">
+                </div>
+                <div>
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" placeholder="Email" id="email">
+                </div>
+                <div>
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" placeholder="Password" id="password">
+                </div>
+                <input type="submit" value="Sign Up" id="login-btn">
+            </form>
+            <div class="google">
+                <button><i class="fa-brands fa-google"></i>Continue With Google</button>
+                <p class="create">Already Have an account? <a href="../pages/signin.html">Sign In Here</a></p>
+            </div>
+        </div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="../scripts/signup.js"></script>
+</body>
+
+</html>

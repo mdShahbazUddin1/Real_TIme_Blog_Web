@@ -1,0 +1,118 @@
+
+.form-container {
+    position: relative;
+    width: 30%;
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+}
+.form-container div{
+    text-align: center;
+    position: relative;
+    font-family: "Gelasio", serif;
+}
+#login{
+    margin: 20px 0 0 0;
+}
+#login input{
+width: 80%;
+padding: 10px;
+margin-top: 20px;
+/* outline: none; */
+border: none;
+background-color: #eeeeee;
+}
+#login input:focus{
+    outline-color: #B3E5FC;
+}
+
+#login i{
+    position: absolute;
+    top: 53%;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+#login input[type="email"]{
+padding-left: 40px;
+}
+#login input[type="text"]{
+padding-left: 40px;
+}
+#login input[type="password"]{
+padding-left: 40px;
+}
+#login input:nth-child(3){
+    width: 20%;
+    background-color: black;
+    color: white;
+   margin-top: 40px;
+   cursor: pointer;
+   transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    border-radius: 2px 15px;
+font-family: "Gelasio", serif;
+letter-spacing: 0.4px;
+}
+
+#login input:nth-child(4){
+    width: 20%;
+    background-color: black;
+    color: white;
+   margin-top: 40px;
+   cursor: pointer;
+   transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    border-radius: 2px 15px;
+font-family: "Gelasio", serif;
+letter-spacing: 0.6px;
+}
+#login input:nth-child(4):active{
+    scale: 0.9;
+}
+
+#login input:nth-child(3):active{
+    scale: 0.9;
+}
+
+.google{
+    margin-top: 50px;
+}
+.google button i{
+    margin-right: 10px;
+color: white;
+font-size: 15px;
+}
+.google button{
+    width: 70%;
+    padding: 9px;
+    outline: none;
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: 500;
+    border-radius: 15px;
+font-family: "Gelasio", serif;
+cursor: pointer;
+transition: all 0.2s ease-in-out;
+}
+
+.google button:active{
+    scale: 0.9;
+}
+.create{
+    margin-top: 20px;
+    font-family: "Gelasio", serif;
+    font-size: 13px;
+}
+
+.create a{
+
+    color: #444;
+    font-family: "Gelasio", serif;
+    font-weight: 500;
+}
+
