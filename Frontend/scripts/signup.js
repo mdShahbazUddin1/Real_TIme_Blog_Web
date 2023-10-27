@@ -15,8 +15,11 @@ iziToast.settings({
   timeout: 5000, // Set the timeout (e.g., 5000ms = 5 seconds)
   close: false, // Do not display the close button
   displayMode: 2, // Set the display mode to replace previous toasts
-  backgroundColor: "#E57373", // Set your desired background color
-  theme: "dark", // You can use 'light' or 'dark' theme
+  backgroundColor: "#F44336", // Set your desired background color
+  theme: "light", // You can use 'light' or 'dark' theme
+  titleColor: "white", // Set the title text color to red
+  messageColor: "white", // Set the message text color to red
+  iconColor: "white",
 });
 
 const register = async () => {
@@ -40,7 +43,7 @@ const register = async () => {
     } else if (!validatePassword(user.password)) {
       iziToast.error({
         title: "Validation Error",
-        message: "Password must contain 1 uppercase letter and 1 number.",
+        message: "Password must contain 8 letter , 1 number , 1 Uppercase",
       });
     } else {
       const response = await fetch(`${BASEURL}/user/register`, {
@@ -56,12 +59,15 @@ const register = async () => {
         title: "Success",
         message: "You have successfully registered.",
         backgroundColor: "#4CAF50", // Green background for success
-        timeout: 5000, // Display for 5 seconds (adjust as needed)
+        timeout: 2000, // Display for 5 seconds (adjust as needed)
         titleColor: "white",
       });
       form.fullname.value = "";
       form.email.value = "";
       form.password.value = "";
+      setTimeout(() => {
+        window.location.href = "../pages/signin.html";
+      }, 2000);
     }
   } catch (error) {
      iziToast.error({

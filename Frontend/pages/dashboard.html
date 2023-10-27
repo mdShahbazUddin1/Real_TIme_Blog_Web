@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/dashobard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navItem">
+            <div class="leftnav">
+                <div class="logo">
+                    <img src="../assets/images/logo.png" alt="" />
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Search" />
+                </div>
+            </div>
+            <div class="rightNav">
+                <div class="write-box">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <p>Write</p>
+                </div>
+                <!--  -->
+                <div class="notification">
+                    <a href="../pages/noti.html"><i class="fa-regular fa-bell"><span></span></i></a>
+                </div>
+
+                <div class="profile">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocL9VfvdVUqbq4FaShYQOoMArnpl231ST8RsQRXYUvOh8is=s384-c"
+                        alt="profile-image">
+                    <div class="user-options">
+                        <div class="options">
+                            <div>
+                                <a href="..pages/profile.html">Profile</a>
+                            </div>
+                            <div>
+                                <a href="..pages/dashboard.html">Dashboard</a>
+                            </div>
+                            <div>
+                                <a href="..pages/setting.html">Setting</a>
+                            </div>
+                            <div class="sign-out">
+                                <p>Sign Out</p>
+                                <!-- <p>@ tanisha</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="signin">
+                    <a href="./pages/signin.html"><button id="signin">Sign In</button></a>
+                </div>
+                <div class="signup">
+                    <a href="./pages/signup.html"><button id="signup">Sign Up</button></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="main-dashboard">
+        <div class="drawer">
+            <div class="drawer-links">
+                <div class="dashboard-link">
+                    <a href="../pages/dashboard.html" class="dashboard">Dashboard</a>
+                </div>
+                <div class="links">
+                    <div class="blog-link">
+
+                        <a href="../pages/blog.html" class="blog"><i class="fa-solid fa-book-open"></i>Blogs</a>
+                    </div>
+                    <div class="notifi-link">
+
+                        <a href="../pages/notification.html" class="notifi"><i
+                                class="fa-regular fa-bell"></i>Notifications</a>
+                    </div>
+                    <div class="write-link">
+
+                        <a href="../pages/write.html" class="writes"><i
+                                class="fa-regular fa-pen-to-square"></i>Write</a>
+                    </div>
+
+                    <div class="setting">
+                        <p class="set-text">Settings</p>
+                        <div>
+                            <a href="../pages/edit.html" class="edit-profile"><i class="fa-regular fa-user"></i>Edit</a>
+                        </div>
+                        <div>
+                            <a href="../pages/password.html" class="change-pass"><i class="fa-solid fa-lock"></i>Change
+                                Password</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="blog-ui">
+            <div class="blog-container">
+                <div class="blogDetails">
+                    <h4>Manage Blogs</h4>
+                    <div class="blog-search">
+                        <i class="fa-solid fa-magnifying-glass gls"></i>
+                        <input type="search" placeholder="Search blog">
+                    </div>
+
+                    <div class="create-blog">
+
+                        <div class="publish">
+                            <button id="publis-btn">Published Blogs</button>
+                            <button id="drft-btn">Drafts</button>
+                        </div>
+
+                        <!--  -->
+
+                        <div class="blog-card">
+                            <div class="left-details">
+                                <div class="blog-img">
+                                    <img src="../assets/images/beach.jpeg" alt="">
+                                </div>
+                                <div class="blog-custom">
+                                    <div class="text-blg">
+                                        <p class="text-head">Test Blog 1</p>
+                                        <p class="blg-small">Published on 27 oct, Friday</p>
+                                    </div>
+
+                                    <div class="opt-btn">
+                                        <button id="edit-btn">Edit</button>
+                                        <button id="dlt-btn">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="right-details">
+                                <div>
+                                    <h5>892</h5>
+                                    <h5>Likes</h5>
+                                </div>
+                                <div>
+                                    <h5>233</h5>
+                                    <h5>Comments</h5>
+                                </div>
+                                <div>
+                                    <h5>1100</h5>
+                                    <h5>Views</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- draft -->
+                        <div class="draf">
+                            <h1>hello</h1>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="notiy">
+<h1>notification</h1>
+        </div>
+        <div id="writeblog">
+<h1>Write</h1>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
+<script src="../scripts/dashboard.js"></script>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <title>Sign In</title>
 </head>
+
 <body>
     <div class="navbar">
         <div class="navItem">
@@ -26,7 +28,7 @@
                     <i class="fa-regular fa-pen-to-square"></i>
                     <p>Write</p>
                 </div>
-             
+
                 <div class="signin">
                     <a href="./signin.html"><button id="signin">Sign In</button></a>
                 </div>
@@ -39,24 +41,27 @@
     <div class="form-container">
         <div>
             <h1>Welcome Back</h1>
-            <form id="login" class="login-form" >
-              <div>
-                <i class="fa-regular fa-envelope"></i>
-                <input type="email" placeholder="Email" id="email1">
-              </div>
-              <div>
-                <i class="fa-solid fa-key"></i>
-                <input type="password" placeholder="Password" id="password1">
-              </div>
-              <input type="submit" value="Sign in">
+            <form id="login" class="login-form">
+                <div>
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" placeholder="Email" id="email1">
+                </div>
+                <div>
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" placeholder="Password" id="password1">
+                </div>
+                <input type="submit" value="Sign in">
             </form>
             <div class="google">
-             <button><i class="fa-brands fa-google"></i>Continue With Google</button>
-             <p class="create">Don't have account ? <a href="../pages/signup.html">Creact Account</a></p>
+                <button id="googleLogin"><i class="fa-brands fa-google"></i>Continue With Google</button>
+                <p class="create">Don't have account ? <a href="../pages/signup.html">Creact Account</a></p>
             </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-    <script src="../scripts/login.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script type="module" src="../scripts/login.js"></script>
 </body>
+
 </html>

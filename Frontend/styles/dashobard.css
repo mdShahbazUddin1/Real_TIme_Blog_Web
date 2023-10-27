@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main-dashboard {
+  position: relative;
+  width: 90%;
+  margin: auto;
+  margin-top: 52px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-grow: 1;
+}
+
+.drawer {
+  width: 15%;
+  margin-top: 11px;
+  z-index: 999;
+  border-right: 1px solid #eeeeee;
+  margin-left: 10px; /* Adjusted margin-left value */
+}
+/* font-family: 'Gelasio', serif; */
+/* font-family: 'Poppins', sans-serif; */
+/* /* font-family: 'Sometype Mono', monospace; */
+
+.dashboard {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  text-decoration: none;
+  font-family: "Sometype Mono", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: #7c7c7c;
+}
+.drawer-links {
+  margin-top: 17px;
+}
+.links {
+  margin-top: 13px;
+}
+
+.links i {
+  margin-right: 10px;
+}
+
+.blog,
+.notifi,
+.writes,
+.edit-profile,
+.change-pass {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid white;
+  color: #7c7c7c;
+}
+.set-text {
+  width: 100%;
+  padding: 9px;
+  text-decoration: none;
+  font-family: "Sometype Mono", monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: #7c7c7c;
+}
+.edit-profile {
+  margin-top: 10px;
+}
+.blog:hover,
+.notifi:hover,
+.writes:hover,
+.edit-profile:hover,
+.change-pass:hover {
+  color: #111111;
+}
+
+.setting {
+  margin-top: 40px;
+}
+.links a.selected {
+  background-color: #eeeeee; /* Change to your desired selected background color */
+  color: #444; /* Change to your desired selected text color */
+  border-right: 2px solid black;
+}
+ #blog-ui,
+        #notiy,
+        #writeblog {
+            display: none; /* Initially hide all right UI elements */
+        }
+#blog-ui {
+  width: 76%;
+  margin: auto;
+  margin-top: 40px;
+}
+.blogDetails h4 {
+  text-decoration: none;
+  font-family: "Sometype Mono", monospace;
+  font-size: 14px;
+  font-weight: bold;
+  color: #7c7c7c;
+}
+.gls {
+   position: absolute;
+  top: 49%; /* Adjust as needed to vertically center the icon */
+  left: 10px; /* Adjust the left position as needed */
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+.blog-search {
+  margin-top: 15px;
+  position: relative;
+}
+
+.blog-search input {
+  width: 90%;
+  background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 15px;
+  font-family: sans-serif;
+  font-weight: bold;
+  outline: none;
+  border: none;
+}
+.blog-search input[type="search"] {
+  padding-left: 30px;
+}
+
+.publish {
+  margin-top: 19px;
+  border-bottom: 1px solid #eeeeee;
+}
+.create-blog button {
+  padding: 5px;
+  background-color: transparent;
+  color: #7c7c7c;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-right: 2px;
+  font-size: 12px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.create-blog button.selected {
+  border-bottom: 1px solid #111111;
+  color: #111111;
+}
+.blog-card {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.draf{
+  display: none;
+}
+.left-details{
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.blog-img{
+  width: 23%;
+  height: 80px;
+}
+.blog-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.blog-custom{
+  margin-top: 0;
+  margin-left: 20px;
+}
+.text-head{
+font-family: 'Gelasio', serif;
+  font-size: 18px;
+  /* font-weight: bold; */
+  color: #111111;
+}
+.blg-small{
+font-family: 'Poppins', serif;
+  font-size: 12px;
+  color: #444;
+}
+.opt-btn{
+  margin-top: 12px;
+}
+
+#edit-btn{
+  color: black;
+  transition: all 0.3s ease-in-out;
+  border: none;
+}
+#edit-btn:active{
+  scale: 0.9;
+}
+
+#dlt-btn{
+  color: #EF5350;
+  transition: all 0.3s ease-in-out;
+  border: none;
+}
+
+#dlt-btn:active{
+  scale: 0.9;
+}
+
+.right-details{
+  display: flex;
+  align-items: center;
+}
+.right-details div{
+  margin-right: 30px;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: bold;
+  color: #7c7c7c;
+  line-height: 15px;
+}
+
+.right-details div h5:last-child{
+  font-size: 11px;
+}

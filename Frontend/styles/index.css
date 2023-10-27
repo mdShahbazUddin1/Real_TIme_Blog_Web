@@ -15,9 +15,9 @@
 .navbar {
   width: 100%;
   display: flex;
-position: fixed;
-top: 0;
-z-index: 999;
+  position: fixed;
+  top: 0;
+  z-index: 999;
   border: 1px solid #eeeeee;
   background-color: white;
   font-family: "Sometype Mono", monospace;
@@ -57,7 +57,7 @@ z-index: 999;
   border: none;
   background-color: #eeeeee;
 }
-.search-box i {
+.fa-magnifying-glass {
   position: absolute;
   top: 26%;
   left: 5%;
@@ -72,13 +72,16 @@ z-index: 999;
 }
 
 .rightNav {
-  width: 23%;
+  /* width: 23%; */
+  width: 18%;
   /* border: 1px solid red; */
+  position: relative;
   display: grid;
   gap: 15px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   text-align: center;
+  justify-content: space-between;
 }
 .write-box {
   display: flex;
@@ -133,6 +136,92 @@ z-index: 999;
 }
 .signup button:active {
   scale: 0.9;
+}
+.notification {
+  position: relative;
+}
+.notification i {
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 15px;
+  color: #6e6e6e;
+  cursor: pointer;
+}
+.notification i span {
+  position: absolute;
+  margin-left: -5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 15px;
+  background-color: red;
+}
+.profile {
+  /* border: 1px solid red; */
+  /* position: relative; */
+  width: 70%;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.profile img {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+}
+.user-options {
+  display: nonoe;
+  width: 68%;
+  position: absolute;
+  right: 10%;
+  background-color: white;
+  margin-top: 7px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  z-index: 999;
+  /* border: 1px solid black; */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: top right;
+}
+.user-options.active {
+  transform: scale(1);
+  opacity: 1;
+}
+.options div a {
+  width: 100%;
+  display: block;
+  font-family: serif;
+  font-size: 13px;
+  border: 1px solid white;
+  text-align: start;
+  padding: 11px;
+  text-decoration: none;
+  color: #6e6e6e;
+  letter-spacing: 0.3px;
+}
+.options div a:hover {
+  background-color: #eeeeee;
+  color: #2e2d2d;
+}
+.sign-out {
+  text-align: start;
+  border-top: 1px solid #eeeeee;
+}
+.sign-out:hover {
+  background-color: #eeeeee;
+}
+.sign-out p {
+  font-family: serif;
+  font-size: 13px;
+  border: 1px solid white;
+  text-align: start;
+  padding: 11px;
+  color: #111111;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.3px;
 }
 .blog-main {
   width: 80%;
@@ -193,7 +282,7 @@ z-index: 999;
 .user-details span {
   font-size: 12px;
   font-weight: 600;
-font-family: 'Poppins', sans-serif; 
+  font-family: "Poppins", sans-serif;
   color: #444;
 }
 .user-image {
@@ -212,18 +301,18 @@ font-family: 'Poppins', sans-serif;
   width: 75%;
 }
 .blog-text p:first-child {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
   color: #2e2d2d;
   letter-spacing: 0.4px;
-    font-family: 'Poppins', sans-serif; 
+  font-family: "Poppins", sans-serif;
   line-height: 30px;
 }
 .blog-text p:last-child {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.4px;
-  font-family: "Gelasio", serif;; 
+  font-family: "Gelasio", serif;
   color: #444;
 }
 .blog-image {
@@ -232,89 +321,88 @@ font-family: 'Poppins', sans-serif;
 .blog-image img {
   width: 100%;
 }
-.category-like{
-    width: 18%;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* border: 1px solid red; */
+.category-like {
+  width: 18%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 1px solid red; */
 }
-.category-like div p{
-     background-color: #eeeeee;
-     padding: 4px  15px;
-     font-size: 12px;
-     font-family: "Poppins";
-     border-radius: 15px;
+.category-like div p {
+  background-color: #eeeeee;
+  padding: 4px 15px;
+  font-size: 12px;
+  font-family: "Poppins";
+  border-radius: 15px;
 }
-.fa-heart{
-color: #555454;
+.fa-heart {
+  color: #555454;
 }
-.like{
-   color: #555454; 
-   font-family: "Poppins";
+.like {
+  color: #555454;
+  font-family: "Poppins";
 }
-.load-more button{
-    margin-top: 20px;
-    padding: 6px 10px;
-    border-radius:0px 20px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    font-family: "Poppins";
-    color: honeydew;
-    border: none;
-     background-color: #4CAF50;
-     cursor: pointer;
-    transition: all ease 0.2s;
-    margin-bottom: 20px;
+.load-more button {
+  margin-top: 20px;
+  padding: 6px 10px;
+  border-radius: 0px 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-family: "Poppins";
+  color: honeydew;
+  border: none;
+  background-color: #4caf50;
+  cursor: pointer;
+  transition: all ease 0.2s;
+  margin-bottom: 20px;
 }
 
-.load-more button:active{
-    scale: 0.9;
+.load-more button:active {
+  scale: 0.9;
 }
 
 .right-blog-details {
   width: 30%;
   /* border: 1px solid red; */
-
 }
 
-.post-filter h2{
-    font-size: 13px;
-    font-family: "Poppins";
-    color: #444;
-    font-weight: 500;
+.post-filter h2 {
+  font-size: 13px;
+  font-family: "Poppins";
+  color: #444;
+  font-weight: 500;
 }
-.filter-options{
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 10px;
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
-.filter-options button{
-    flex-grow: 1;
-    flex-basis: 200;
-    margin: 5px 5px 5px 0;
-    padding: 6px;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    font-family: "Gelasio", serif;
-    background-color: #eeeeee;
-    color: #444;
-    border: none;
-    outline:none ;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+.filter-options button {
+  flex-grow: 1;
+  flex-basis: 200;
+  margin: 5px 5px 5px 0;
+  padding: 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Gelasio", serif;
+  background-color: #eeeeee;
+  color: #444;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.filter-options button:hover{
+.filter-options button:hover {
   background-color: black;
   color: honeydew;
 }
 
-.trending{
-    margin-top: 15px;
+.trending {
+  margin-top: 15px;
 }
-.trending span{
+.trending span {
   font-family: "Gelasio", serif;
   font-size: 13px;
   font-weight: 500;
@@ -324,7 +412,7 @@ color: #555454;
   font-size: 12px;
   color: #444;
 }
-.top-trending{
+.top-trending {
   display: flex;
   align-items: start;
   justify-content: space-between;
@@ -333,39 +421,39 @@ color: #555454;
   margin-bottom: 10px;
   cursor: pointer;
 }
-.top-leaderboard{
+.top-leaderboard {
   width: 50%;
   text-align: center;
   padding: 0px 8px;
 }
-.top-leaderboard h1{
+.top-leaderboard h1 {
   font-size: 45px;
   font-family: "Gelasio", serif;
   color: #eeeeee;
   font-weight: 600;
 }
 
-.trend-blog-details{
+.trend-blog-details {
   display: flex;
   align-items: center;
 }
-.top-user-image{
+.top-user-image {
   width: 5%;
   margin-right: 5px;
 }
-.top-user-image img{
+.top-user-image img {
   width: 100%;
 }
-.trend-blog-details{
-margin-top: 8px;
+.trend-blog-details {
+  margin-top: 8px;
 }
-.trend-blog-details span{
-font-family: "Poppins";
-font-weight: 600;
-font-size: 11px;
-margin-right: 3px;
+.trend-blog-details span {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 11px;
+  margin-right: 3px;
 }
-.trend-blog-text{
+.trend-blog-text {
   margin-top: 5px;
   font-family: "Gelasio", serif;
   font-size: 16px;
