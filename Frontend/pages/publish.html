@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/publish.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <title>Publish Post</title>
+</head>
+
+<body>
+
+    <div class="publish-container">
+        <div class="container">
+            <div class="left-pub">
+                <div class="pub-img">
+                    <img id="preview-image" src="" alt="">
+                </div>
+                <h3 id="title1"></h3>
+                <p id="emptyP"></p>
+            </div>
+            <div class="right-pub">
+                <div class="title">
+                    <h5>Blog Title</h5>
+                    <div>
+                        <p contenteditable=true id="title2"></p>
+                    </div>
+                </div>
+                <div class="bio">
+                    <h5>Short description about your post</h5>
+                    <div>
+                        <p contenteditable=true id="bio">Bio</p>
+                    </div>
+                    <p class="char"></p>
+                </div>
+                <div class="topic">
+                    <h5>Topics-( Helps in searching and reading your post )</h5>
+                    <div>
+                        <p contenteditable=true>Topic</p>
+                    <div class="topic-adds">
+                        <!-- <span>Text <i class="fa-solid fa-x"></i></span>
+                        <span>Text <i class="fa-solid fa-x"></i></span>
+                        <span>Text <i class="fa-solid fa-x"></i></span> -->
+                    </div>
+                    
+                    </div>
+                <p class="tags"></p>
+                </div>
+                <button id="publisBtn">Publish</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script src="../scripts/publish.js"></script>

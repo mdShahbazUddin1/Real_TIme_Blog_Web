@@ -15,7 +15,7 @@
         <div class="navItem">
             <div class="leftnav">
                 <div class="logo">
-                    <img src="../assets/images/logo.png" alt="" />
+                    <a href="../index.html"><img src="../assets/images/logo.png" alt="" /></a>
                 </div>
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -164,12 +164,47 @@
         </div>
 
         <div id="notiy">
-<h1>notification</h1>
-        </div>
-        <div id="writeblog">
-<h1>Write</h1>
+            <div class="noty-cont">
+                <div class="noti-details">
+                    <h4>Recent Notification</h4>
+                    <div class="noti-btn">
+                        <button id="all-btn">All</button>
+                        <button id="like">Like</button>
+                        <button id="comment">Comment</button>
+                        <button class="reply">Reply</button>
+                    </div>
+
+                    <div class="no-noti">
+                        <h4>Nothing Available</h4>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div id="blog-create">
+            <div class="post-blog">
+                <h4>Create post</h4>
+                <div class="post-btn">
+                    <button id="save-pub">Publish</button>
+                    <button>Save Draft</button>
+                </div>
+                <div class="post-img">
+                    <div class="img-div">
+                        <h3 id="img-txt">Upload Image</h3>
+                        <img id="preview-image" src="default-image.jpg" alt="" style="display: none;">
+                    </div>
+                    <input type="file" id="image-input">
+                    <div class="blg-title">
+                        <p contentEditable="true">Blog Title</p>
+                    </div>
+                    <div class="blg-story">
+                        <i class="fa-solid fa-plus"></i>
+                        <span contentEditable="true">Let's write an awesome story !</span>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
 
     </div>
 </body>
