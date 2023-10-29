@@ -6,7 +6,9 @@ const publishBtn = document.getElementById("publis-btn");
 const draftBtn = document.getElementById("drft-btn");
 const publishBlog = document.querySelector(".blog-card");
 const draftBlog = document.querySelector(".draf");
-const rightUIs = document.querySelectorAll("#blog-ui, #notiy, #writeblog, #blog-create");
+const rightUIs = document.querySelectorAll(
+  "#blog-ui, #notiy, #writeblog, #blog-create, #edit, #change-pass"
+);
 const imageInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
 const savePublish = document.getElementById("save-pub");
@@ -125,6 +127,43 @@ function saveToLocalStorage() {
 }
 
  savePublish.addEventListener("click",saveToLocalStorage)
+
+ const bioText = document.getElementById("bio");
+ const charCount = document.querySelector(".updt-count");
+
+ const maxCharCount = 200; // Define your character limit here
+
+ // Function to update the character count
+ function updateCharCount(event) {
+   const updatedText = event.target.textContent;
+   const charRemaining = maxCharCount - updatedText.length;
+
+   charCount.textContent = `${charRemaining} character${
+     charRemaining !== 1 ? "s" : ""
+   } left`;
+
+   if (charRemaining < 0) {
+     charCount.style.color = "red";
+   } else {
+     charCount.style.color = "initial";
+   }
+ }
+
+ // Add an input event listener to the bioText element
+ bioText.addEventListener("input", updateCharCount);
+
+
+ const fileInput = document.getElementById("fileInput");
+ const userImg = document.querySelector(".user-img img");
+
+ // Add an event listener to the file input
+ fileInput.addEventListener("change", function () {
+   const selectedFile = fileInput.files[0];
+   if (selectedFile) {
+     const imageUrl = URL.createObjectURL(selectedFile);
+     userImg.src = imageUrl;
+   }
+ });
 
  
 

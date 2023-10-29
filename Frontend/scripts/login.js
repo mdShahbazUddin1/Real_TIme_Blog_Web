@@ -2,9 +2,16 @@ const loginForm = document.querySelector(".login-form");
 const email = document.getElementById("email1");
 const loginWithGoogle = document.getElementById("googleLogin");
 const password = document.getElementById("password1");
-import { getAuth, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
+import {
+  getAuth,
+  signInWithPopup,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
 import { firebaseApp, googleAuthProvider } from "./firebase.js"; // Import your Firebase setup
-
+const nofiDiv = document.querySelector(".notification");
+const profileDiv = document.querySelector(".profile");
+const signinDiv = document.querySelector(".signin");
+const signupDiv = document.querySelector(".signup");
+const rightNavDiv = document.querySelector(".rightNav");
 
 const BASEURL = `http://localhost:8080`;
 
@@ -59,9 +66,14 @@ const loginUser = async () => {
           titleColor: "white",
         });
         setTimeout(() => {
+          (nofiDiv.style.display = "block"),
+            (profileDiv.style.display = "block");
+          signinDiv.style.display = "none";
+          signupDiv.style.display = "none";
+          rightNavDiv.style.width = "18%";
+          localStorage.setItem("loggedIn", "true");
           window.location.href = "../pages/dashboard.html";
         }, 2000);
-        
       }
     }
   } catch (error) {
@@ -80,22 +92,27 @@ loginWithGoogle.addEventListener("click", async () => {
 
     // You can now use the 'user' object, which contains information about the authenticated user
     // console.log("Google login successful. User:", user);
-  const access_token = user.stsTokenManager.accessToken;
-  const response = await fetch(`${BASEURL}/user/googleAuth`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ access_token }),
-  });
+    const access_token = user.stsTokenManager.accessToken;
+    const response = await fetch(`${BASEURL}/user/googleAuth`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ access_token }),
+    });
 
-  // Handle the response from your API here
-  if (response.status === 200) {
-    window.location.href = "../pages/dashboard.html"
-    // console.log("Login with your API successful.");
-  } else {
-    console.error("API login error:", response.status);
-  }
+    // Handle the response from your API here
+    if (response.status === 200) {
+      (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");
+      signinDiv.style.display = "none";
+      signupDiv.style.display = "none";
+      rightNavDiv.style.width = "18%";
+      localStorage.setItem("loggedIn", "true");
+      window.location.href = "../pages/dashboard.html";
+      // console.log("Login with your API successful.");
+    } else {
+      console.error("API login error:", response.status);
+    }
   } catch (error) {
     console.error("Google login error:", error);
   }
@@ -106,4 +123,3 @@ function validateEmail(email) {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   return emailRegex.test(email);
 }
-

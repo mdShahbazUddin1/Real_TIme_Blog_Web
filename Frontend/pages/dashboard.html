@@ -38,13 +38,13 @@
                     <div class="user-options">
                         <div class="options">
                             <div>
-                                <a href="..pages/profile.html">Profile</a>
+                                <a href="../pages/profile.html">Profile</a>
                             </div>
                             <div>
-                                <a href="..pages/dashboard.html">Dashboard</a>
+                                <a href="../pages/dashboard.html">Dashboard</a>
                             </div>
                             <div>
-                                <a href="..pages/setting.html">Setting</a>
+                                <a href="../pages/setting.html">Setting</a>
                             </div>
                             <div class="sign-out">
                                 <p>Sign Out</p>
@@ -55,16 +55,15 @@
                 </div>
 
 
-                <!-- <div class="signin">
+                <div class="signin">
                     <a href="./pages/signin.html"><button id="signin">Sign In</button></a>
                 </div>
                 <div class="signup">
                     <a href="./pages/signup.html"><button id="signup">Sign Up</button></a>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
-
     <div class="main-dashboard">
         <div class="drawer">
             <div class="drawer-links">
@@ -90,7 +89,8 @@
                     <div class="setting">
                         <p class="set-text">Settings</p>
                         <div>
-                            <a href="../pages/edit.html" class="edit-profile"><i class="fa-regular fa-user"></i>Edit</a>
+                            <a href="../pages/edit.html" class="edit-profile"><i class="fa-regular fa-user"></i>Edit
+                                Profile</a>
                         </div>
                         <div>
                             <a href="../pages/password.html" class="change-pass"><i class="fa-solid fa-lock"></i>Change
@@ -202,12 +202,88 @@
                         <span contentEditable="true">Let's write an awesome story !</span>
                     </div>
                 </div>
-              
+
             </div>
+        </div>
+
+        <div id="edit">
+            <div class="edits-profile">
+                <h3>Edit Profile</h3>
+                <div class="updt-pro">
+                    <div class="updt-image">
+                        <div class="user-img">
+                            <img src="../assets/images/beach.jpeg" alt="">
+
+                        </div>
+                        <label for="fileInput" class="custom-file-upload">
+                            Upload Image
+                        </label>
+                        <input type="file" id="fileInput" style="display: none;">
+                    </div>
+                    <div class="update-details">
+                        <div class="user-input">
+                            <div class="user-name">
+                                <p><i class="fa-solid fa-user"></i> Kunal</p>
+                                <p><i class="fa-solid fa-envelope"></i> kunal@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="updt">
+                            <div class="updt-username">
+                                <p contenteditable=true><span>@</span>kunal123</p>
+                            </div>
+                            <p class="updt-info">Username will use to search user and will be visibleto all users</p>
+                        </div>
+                        <div class="updt-bio">
+                            <div class="updt-bio-details">
+                                <p contenteditable=true id="bio">Bio</p>
+                            </div>
+                            <p class="updt-count"></p>
+                        </div>
+
+                        <div class="updt-social">
+                            <p>Add your social handle below</p>
+                            <div class="social-input">
+                                <p contenteditable=true><i class="fa-brands fa-youtube"></i>https://</p>
+                                <p contenteditable=true><i class="fa-brands fa-instagram"></i>https://</p>
+                                <p contenteditable=true><i class="fa-brands fa-twitter"></i>https://</p>
+                                <p contenteditable=true><i class="fa-brands fa-facebook"></i>https://</p>
+                                <p contenteditable=true><i class="fa-brands fa-github"></i>https://</p>
+                                <p contenteditable=true><i class="fa-solid fa-link"></i>https://</p>
+                            </div>
+                        </div>
+                        <button id="update">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="change-pass">
+            <div class="pop-up">
+                 <p><i class="fa-solid fa-check"></i>Hurray ! Password change</p>
+            </div>
+            <div class="form-container">
+                <h3>Change password</h3>
+                <form id="change-form">
+                    <div>
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Current Password">
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="New Password">
+                    </div>
+
+                    <input type="submit" id="chnage-btn" value="Change Password">
+                </form>
+            </div>
+
         </div>
 
     </div>
 </body>
-
 </html>
-<script src="../scripts/dashboard.js"></script>
+<script type="module" src="../scripts/index.js"></script>
+<script type="module" src="../scripts/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+<script type="module" src="../scripts/changepass.js"></script>

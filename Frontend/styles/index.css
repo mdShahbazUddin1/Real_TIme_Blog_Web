@@ -12,6 +12,12 @@
   --poppins: "Poppins", sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
 .navbar {
   width: 100%;
   display: flex;
@@ -72,8 +78,8 @@
 }
 
 .rightNav {
-  /* width: 23%; */
-  width: 18%;
+  width: 23%;
+  /* width: 18%; */
   /* border: 1px solid red; */
   position: relative;
   display: grid;
@@ -139,6 +145,7 @@
 }
 .notification {
   position: relative;
+  display: none;
 }
 .notification i {
   background-color: #f0f0f0;
@@ -159,6 +166,7 @@
 .profile {
   /* border: 1px solid red; */
   /* position: relative; */
+  display: none;
   width: 70%;
   height: 35px;
   border-radius: 50%;

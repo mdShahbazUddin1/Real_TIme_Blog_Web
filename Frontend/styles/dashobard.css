@@ -96,7 +96,7 @@ html, body {
 #blog-ui,
 #notiy,
 #writeblog,
-#blog-create {
+#blog-create,#edit,#change-pass {
   display: none; /* Initially hide all right UI elements */
 }
 #blog-ui {
@@ -126,7 +126,7 @@ html, body {
 .blog-search input {
   width: 90%;
   background-color: #eeeeee;
-  padding: 14px;
+  padding: 11px;
   border-radius: 25px;
   font-family: sans-serif;
   font-weight: bold;
@@ -376,3 +376,273 @@ font-family: 'Gelasio', serif;
   margin-right: 10px;
   font-size: 12px;
 }
+
+#edit{
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+}
+.edits-profile h3{
+font-size: 14px;
+  font-family: sans-serif;
+  color: #575757;
+}
+.updt-pro{
+  width: 100%;
+  margin-top: 25px;
+   display: flex;
+  align-items: start;
+  gap: 20px;
+}
+
+.user-img{
+  width: 100%;
+  height: 120px;
+  border-radius: 50%;
+}
+.user-img img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.updt-pro input{
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.update-details{
+  width: 70%;
+}
+.updt-image{
+  width: 15%;
+  text-align: center;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background: #eeeeee;
+    color: #444;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Style the label to look like a button */
+.custom-file-upload:hover {
+    background: #0056b3;
+    color: #fff;
+}
+
+.user-name{
+  width: 100%;
+  display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 10px;
+ margin-bottom: 10px;
+}
+
+.user-name i{
+  margin-right: 6px;
+}
+
+.user-name p{
+  width: 80%;
+  background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+   color: #575757;
+}
+
+.updt-username p{
+width: 100%;
+ background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+    color: #575757;
+    border: none;
+    outline: none;
+}
+
+.updt-username p span{
+  margin-right: 10px;
+}
+
+.updt-info{
+  margin-top: 8px;
+  font-size: 11px;
+  font-family: sans-serif;
+  color: #575757;
+  margin-left: 3px;
+   margin-bottom: 10px;
+}
+
+.updt-bio{
+  width: 100%;
+}
+.updt-bio-details{
+  background-color: #eeeeee;
+  padding: 5px;
+  height: 100px;
+}
+.updt-bio-details p{
+  outline: none;
+  border: none;
+  font-size: 12px;
+  font-family: sans-serif;
+  color: #575757;
+}
+.updt-count{
+  margin-top: 8px;
+  font-size: 11px;
+  font-family: sans-serif;
+  color: #575757;
+  margin-left: 3px;
+   margin-bottom: 10px;
+}
+
+.updt-social{
+  margin-top: 20px;
+}
+.updt-pro p {
+  font-size: 12px;
+  font-family: sans-serif;
+  color: #575757;
+  margin-left: 3px;
+   margin-bottom: 10px;
+}
+.social-input{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+
+.social-input p{
+  outline: none;
+  border: none;
+   background-color: #eeeeee;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+.social-input p i{
+  margin-right: 15px;
+  color: #111111;
+}
+
+#update{
+  margin-top: 15px;
+  outline: none;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: #111111;
+  color: #fff;
+  transition: all .3s ease-in-out;
+}
+
+#update:active{
+scale: 0.9;
+}
+
+#change-pass{
+  position: relative;
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+}
+.pop-up{
+  display: none;
+  position: absolute;
+  left: 30%;
+  top: -37%;
+  z-index: 999;
+  border: 1px solid #eeeeee;
+  background-color: #4CAF50;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  animation: popUp 0.5s ease-in-out; 
+}
+.pop-up p{
+  padding: 10px;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #fff;
+}
+.pop-up p i{
+  color:#fff ;
+  font-size: 15px;
+  margin-right: 5px;
+}
+ @keyframes popUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+.form-container h3{
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #7c7c7c;
+}
+
+#change-form{
+  width: 28%;
+margin-top: 20px;
+position: relative;
+}
+#change-form div i{
+  position: absolute;
+  margin-top: 12px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+#change-form input{
+display: block;
+width: 100%;
+margin-top: 10px;
+padding: 12px;
+font-size: 11px;
+border-radius: 5px;
+outline: none;
+border: none;
+background-color: #eeeeee;
+}
+
+#change-form input[type="password"]{
+  padding-left: 30px;
+  color: #444;
+}
+
+#change-form input:nth-child(3){
+width: 50%;
+margin-top: 15px;
+padding: 10px 10px;
+border-radius: 30px;
+background-color: #111111;
+color: #fff;
+transition: all .3s ease-in-out;
+cursor: pointer;
+}
+#change-form input:nth-child(3):active{
+  scale: 0.9;
+}
+
+
+
+
+
