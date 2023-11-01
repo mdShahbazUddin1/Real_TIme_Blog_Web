@@ -72,6 +72,7 @@ const loginUser = async () => {
           signupDiv.style.display = "none";
           rightNavDiv.style.width = "18%";
           localStorage.setItem("loggedIn", "true");
+          localStorage.setItem("token", data.token);
           window.location.href = "../pages/dashboard.html";
         }, 2000);
       }
@@ -100,7 +101,9 @@ loginWithGoogle.addEventListener("click", async () => {
       },
       body: JSON.stringify({ access_token }),
     });
-
+    const data = await response.json()
+    console.log(data)
+    
     // Handle the response from your API here
     if (response.status === 200) {
       (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");
@@ -108,6 +111,7 @@ loginWithGoogle.addEventListener("click", async () => {
       signupDiv.style.display = "none";
       rightNavDiv.style.width = "18%";
       localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("token", data.token);
       window.location.href = "../pages/dashboard.html";
       // console.log("Login with your API successful.");
     } else {

@@ -1,0 +1,42 @@
+const express = require("express")
+const multer = require("multer");
+const blogRoute = express.Router()
+const blogController = require("../controller/blog.controller")
+const { auth } = require("../middleware/auth")
+
+blogRoute.use(express.json({ limit: "50mb" }));
+
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 50 * 1024 * 1024, // Set the maximum file size to 50MB
+  },
+});
+
+
+blogRoute.get("/getallblog",blogController.getAllBlog)
+blogRoute.get("/getblog",auth,blogController.getBlogById);
+blogRoute.post(
+  "/createblog",
+  auth,
+  upload.single("image"),
+  blogController.createBlog
+);
+blogRoute.get("/authorblog",auth,blogController.getAuthorBlog)
+blogRoute.post("/savedraft",auth,blogController.saveToDraft);
+blogRoute.get("/getdraft",auth,blogController.getDraftBlog);
+blogRoute.put(
+  "/updateblog",
+  upload.single("image"),
+  auth,
+  upload.single("image"),
+  blogController.updateBlog
+);
+blogRoute.delete("/deleteblog/:id",auth,blogController.deleteBlog)
+
+
+
+module.exports = {
+    blogRoute
+}

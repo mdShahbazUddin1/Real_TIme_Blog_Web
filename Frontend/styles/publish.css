@@ -131,8 +131,10 @@ body {
   word-wrap: break-word;
 }
 .right-pub div p {
-  word-wrap: break-word;
   width: 100%;
+  word-wrap: break-word;
+  text-transform: capitalize;
+  
 }
 
 #publisBtn {

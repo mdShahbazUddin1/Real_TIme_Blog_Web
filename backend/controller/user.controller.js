@@ -160,6 +160,8 @@ const googleAuth = async (req, res) => {
   }
 };
 
+
+
 const logout = async (req, res) => {
   try {
     const token = req.headers?.authorization;

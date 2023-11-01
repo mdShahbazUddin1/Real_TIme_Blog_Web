@@ -16,12 +16,11 @@ const imageText = document.getElementById("img-txt");
 const titleParagraph = document.querySelector(".blg-title p");
 const storyParagraph = document.querySelector(".blg-story span");
 
-
+const BASEURL = `http://localhost:8080`;
 profileDiv.addEventListener("click", () => {
   userOptions.classList.toggle("active");
   userOptions.style.display = "block";
 });
-
 
 links.forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -55,14 +54,13 @@ buttons.forEach((btn) => {
 
 publishBtn.addEventListener("click", () => {
   draftBlog.style.display = "none";
-  publishBlog.style.display = "flex";
+  publishBlog.style.display = "block";
 });
 
 draftBtn.addEventListener("click", () => {
   draftBlog.style.display = "block";
   publishBlog.style.display = "none";
 });
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const defaultSelectedLink = document.querySelector(".blog-link a");
@@ -71,17 +69,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const index = Array.from(links).indexOf(defaultSelectedLink);
   rightUIs[index].style.display = "block";
 });
+titleParagraph.addEventListener("click", function () {
+  // Clear the text when the paragraph is clicked
+  this.textContent = "";
+  this.style.color = "black";
+});
 
 imageInput.addEventListener("change", (event) => {
   // Check if a file was selected
   if (event.target.files.length > 0) {
     const selectedFile = event.target.files[0];
-    previewImage.style.display = "inline"
-    imageText.style.display = "none"
+    previewImage.style.display = "inline";
+    imageText.style.display = "none";
 
     // Create a URL for the selected file and set it as the image source
     const imageUrl = URL.createObjectURL(selectedFile);
     previewImage.src = imageUrl;
+    if (selectedFile instanceof Blob) {
+      // If the selected file is a blob, convert it to a data URL
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        // Save the data URL in localStorage or wherever you need it
+        const dataURL = e.target.result;
+        localStorage.setItem("blogImage", dataURL);
+      };
+
+      reader.readAsDataURL(selectedFile);
+    }
   } else {
     // If no file is selected, clear the image source
     previewImage.src = "";
@@ -90,11 +106,6 @@ imageInput.addEventListener("change", (event) => {
 });
 
 
- titleParagraph.addEventListener("click", function () {
-   // Clear the text when the paragraph is clicked
-   this.textContent = "";
-   this.style.color = "black";
- });
 
 function saveToLocalStorage() {
   const title = titleParagraph.textContent;
@@ -119,51 +130,182 @@ function saveToLocalStorage() {
 
     const dataString = JSON.stringify(dataToPublish);
     localStorage.setItem("blog", dataString);
-    window.location.href="../pages/publish.html"
+    window.location.href = "../pages/publish.html";
   } else {
     // Handle the case when a default image is selected (you can alert or ignore it)
     alert("Please select an image before saving.");
   }
 }
 
- savePublish.addEventListener("click",saveToLocalStorage)
+savePublish.addEventListener("click", saveToLocalStorage);
 
- const bioText = document.getElementById("bio");
- const charCount = document.querySelector(".updt-count");
+const bioText = document.getElementById("bio");
+const charCount = document.querySelector(".updt-count");
 
- const maxCharCount = 200; // Define your character limit here
+const maxCharCount = 200; // Define your character limit here
 
- // Function to update the character count
- function updateCharCount(event) {
-   const updatedText = event.target.textContent;
-   const charRemaining = maxCharCount - updatedText.length;
+// Function to update the character count
+function updateCharCount(event) {
+  const updatedText = event.target.textContent;
+  const charRemaining = maxCharCount - updatedText.length;
 
-   charCount.textContent = `${charRemaining} character${
-     charRemaining !== 1 ? "s" : ""
-   } left`;
+  charCount.textContent = `${charRemaining} character${
+    charRemaining !== 1 ? "s" : ""
+  } left`;
 
-   if (charRemaining < 0) {
-     charCount.style.color = "red";
-   } else {
-     charCount.style.color = "initial";
-   }
- }
+  if (charRemaining < 0) {
+    charCount.style.color = "red";
+  } else {
+    charCount.style.color = "initial";
+  }
+}
 
- // Add an input event listener to the bioText element
- bioText.addEventListener("input", updateCharCount);
+// Add an input event listener to the bioText element
+bioText.addEventListener("input", updateCharCount);
+
+const fileInput = document.getElementById("fileInput");
+const userImg = document.querySelector(".user-img img");
+
+// Add an event listener to the file input
+fileInput.addEventListener("change", function () {
+  const selectedFile = fileInput.files[0];
+  if (selectedFile) {
+    const imageUrl = URL.createObjectURL(selectedFile);
+    userImg.src = imageUrl;
+  }
+});
+
+const fethcDisplay = async () => {
+  try {
+    const resposne = await fetch(`${BASEURL}/blog/authorblog`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+    const data = await resposne.json();
+    displayBlog(data);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+fethcDisplay();
 
 
- const fileInput = document.getElementById("fileInput");
- const userImg = document.querySelector(".user-img img");
+const displayBlog = async (data) => {
+  const blogContainer = document.querySelector(".blog-card");
+  blogContainer.innerHTML = ""; // Clear the existing content
 
- // Add an event listener to the file input
- fileInput.addEventListener("change", function () {
-   const selectedFile = fileInput.files[0];
-   if (selectedFile) {
-     const imageUrl = URL.createObjectURL(selectedFile);
-     userImg.src = imageUrl;
-   }
- });
+  data.forEach((blog, index) => {
+    const cardContainer = document.createElement("div");
+    cardContainer.setAttribute("class", "blog-card-container");
+    const leftCard = document.createElement("div");
+    leftCard.setAttribute("class", "left-details");
 
- 
+    const leftBlogImg = document.createElement("div");
+    leftBlogImg.setAttribute("class", "blog-img");
 
+    const leftimg = document.createElement("img");
+    leftimg.src = blog.banner;
+
+    leftBlogImg.appendChild(leftimg);
+    leftCard.appendChild(leftBlogImg);
+
+    const blogCustom = document.createElement("div");
+    blogCustom.setAttribute("class", "blog-custom");
+
+    const textBlg = document.createElement("div");
+    textBlg.setAttribute("class", "text-blg");
+
+    const textHead = document.createElement("p");
+    textHead.setAttribute("class", "text-head");
+    textHead.textContent = blog.title; // Set your title here
+
+    const blgSmall = document.createElement("p");
+    blgSmall.setAttribute("class", "blg-small");
+    const currentDate = new Date();
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = currentDate.toLocaleDateString(undefined, options);
+
+    blgSmall.textContent = `Published on ${formattedDate}`;
+
+    textBlg.appendChild(textHead);
+    textBlg.appendChild(blgSmall);
+    blogCustom.appendChild(textBlg);
+
+    leftCard.appendChild(blogCustom);
+
+    const optBtn = document.createElement("div");
+    optBtn.setAttribute("class", "opt-btn");
+
+    const editBtn = document.createElement("button");
+    editBtn.setAttribute("id", "edit-btn");
+    editBtn.textContent = "Edit";
+
+    const dltBtn = document.createElement("button");
+    dltBtn.setAttribute("id", "dlt-btn");
+    dltBtn.textContent = "Delete";
+
+    dltBtn.addEventListener("click",async()=>{
+      const response = await fetch(`${BASEURL}/blog/deleteblog/${blog._id}`,{
+        method:"DELETE",
+        headers:{
+         Authorization : localStorage.getItem("token")
+        }
+      });
+      const data = await response.json()
+       if (response.ok) {
+      console.log("blog deleted")
+         fethcDisplay();
+       } else {
+         console.log("failed to delte")
+       }
+
+    })
+
+    optBtn.appendChild(editBtn);
+    optBtn.appendChild(dltBtn);
+
+    blogCustom.appendChild(optBtn);
+
+    const rightCard = document.createElement("div");
+    rightCard.setAttribute("class", "right-details");
+
+    // Likes
+    const likesDiv = document.createElement("div");
+    const likesCount = document.createElement("h5");
+    likesCount.innerText = blog.activity.total_likes;
+    const likesLabel = document.createElement("h5");
+    likesLabel.innerText = "Likes";
+    likesDiv.appendChild(likesCount);
+    likesDiv.appendChild(likesLabel);
+
+    // Comments
+    const commentsDiv = document.createElement("div");
+    const commentsCount = document.createElement("h5");
+    commentsCount.innerText = blog.activity.total_comments;
+    const commentsLabel = document.createElement("h5");
+    commentsLabel.innerText = "Comments";
+    commentsDiv.appendChild(commentsCount);
+    commentsDiv.appendChild(commentsLabel);
+
+    // Views
+    const viewsDiv = document.createElement("div");
+    const viewsCount = document.createElement("h5");
+    viewsCount.innerText = blog.activity.total_reads;
+    const viewsLabel = document.createElement("h5");
+    viewsLabel.innerText = "Views";
+    viewsDiv.appendChild(viewsCount);
+    viewsDiv.appendChild(viewsLabel);
+
+    rightCard.appendChild(likesDiv);
+    rightCard.appendChild(commentsDiv);
+    rightCard.appendChild(viewsDiv);
+
+    cardContainer.append(leftCard, rightCard);
+    blogContainer.append(cardContainer);
+  });
+};
