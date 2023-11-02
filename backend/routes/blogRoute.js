@@ -14,7 +14,7 @@ const upload = multer({
   },
 });
 
-
+blogRoute.get("/author",auth,blogController.getAuthorById)
 blogRoute.get("/getallblog",blogController.getAllBlog)
 blogRoute.get("/getblog",auth,blogController.getBlogById);
 blogRoute.post(
@@ -33,13 +33,18 @@ blogRoute.get("/getdraft",auth,blogController.getDraftBlog);
 blogRoute.get("/draft/:blogId",auth, blogController.getDraftBlogById);
 blogRoute.put(
   "/updateblog",
-  upload.single("image"),
   auth,
   upload.single("image"),
   blogController.updateBlog
 );
 blogRoute.delete("/deleteblog/:id",auth,blogController.deleteBlog)
 blogRoute.put("/update/:id",auth,blogController.updateDraft)
+blogRoute.put(
+  "/editprofile",
+  auth,
+  upload.single("image"),
+  blogController.editProfile
+);
 
 
 

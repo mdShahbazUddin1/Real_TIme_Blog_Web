@@ -3,7 +3,21 @@ const uuid = require("uuid");
 const { UserModel } = require("../models/Users");
 
 
-const getAllBlog = async(req,res)=>{
+const getAuthorById = async(req,res) =>{
+  try {
+    const authorId = req.userId;
+
+    const isAuthorPresent = await UserModel.findOne({_id:authorId});
+
+    if(!isAuthorPresent) return res.status(403).send({msg:"Author not found"})
+
+    res.status(200).send(isAuthorPresent)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
+
+const getAllBlog = async (req, res) => {
   try {
     const blogs = await BlogModel.find({ draft: false }).populate("author");
 
@@ -15,7 +29,7 @@ const getAllBlog = async(req,res)=>{
   } catch (error) {
     res.status(500).send(error);
   }
-}
+};
 
 const getBlogById = async (req, res) => {
   try {
@@ -35,7 +49,7 @@ const getBlogById = async (req, res) => {
   }
 };
 
-const getAuthorBlog = async(req,res) => {
+const getAuthorBlog = async (req, res) => {
   try {
     const authorId = req.userId;
 
@@ -44,14 +58,14 @@ const getAuthorBlog = async(req,res) => {
       draft: false,
     }).populate("author");
 
+    if (!blog || blog.length === 0)
+      return res.status(403).send({ msg: "No blog found for this author" });
 
-    if(!blog || blog.length === 0) return res.status(403).send({msg:"No blog found for this author"});
-
-    res.status(200).send(blog)
+    res.status(200).send(blog);
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
-}
+};
 
 const createBlog = async (req, res) => {
   try {
@@ -85,11 +99,10 @@ const createBlog = async (req, res) => {
   }
 };
 
-
 const saveToDraft = async (req, res) => {
   try {
     const userId = req.userId;
-    const {title, des, content, tags } = req.body;
+    const { title, des, content, tags } = req.body;
 
     let imageDataURL = null;
     if (req.file) {
@@ -118,18 +131,18 @@ const saveToDraft = async (req, res) => {
   }
 };
 
-const getDraftBlog = async (req,res) =>{
+const getDraftBlog = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const draftBlog = await BlogModel.find({author:userId, draft:true});
+    const draftBlog = await BlogModel.find({ author: userId, draft: true });
 
-    if(!draftBlog) return res.status(201).send({msg:"No blog found"});
-     res.status(200).json(draftBlog);
+    if (!draftBlog) return res.status(201).send({ msg: "No blog found" });
+    res.status(200).json(draftBlog);
   } catch (error) {
-    res.status(500).send({msg:error.message})
+    res.status(500).send({ msg: error.message });
   }
-}
+};
 const getDraftBlogById = async (req, res) => {
   try {
     const userId = req.userId;
@@ -152,86 +165,87 @@ const getDraftBlogById = async (req, res) => {
   }
 };
 
-const updateBlog = async(req,res) =>{
-try {
-
-  const {title,desc,content} = req.body
-  const userId = req.user._id;
-  const blogId = req.params.blogId
-
-   const blog = await BlogModel.findById(blogId);
-
-   // Check if the blog exists
-   if (!blog) {
-     return res.status(404).json({ msg: "Blog not found" });
-   }
-
-   // Check if the authenticated user is the author of the blog
-   if (blog.author.toString() !== userId) {
-     return res
-       .status(403)
-       .json({ msg: "You are not authorized to update this blog" });
-   }
-   let imageDataURL = null;
-   if (req.file) {
-     const imageBuffer = req.file.buffer;
-     const imageBase64 = imageBuffer.toString("base64");
-     imageDataURL = `data:${req.file.mimetype};base64,${imageBase64}`;
-   }
-
-     blog.title = title;
-     blog.banner = imageDataURL;
-     blog.desc =  desc;
-     blog.content = content;
-
-     await blog.save()
-   res.status(200).send({msg:"blog update"})
-} catch (error) {
-  res.status(500).send({msg:error.message})
-}
-
-}
-
-const deleteBlog = async(req,res) => {
+const updateBlog = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { title, desc, content } = req.body;
+    const userId = req.user._id;
+    const blogId = req.params.blogId;
+
+    const blog = await BlogModel.findById(blogId);
+
+    // Check if the blog exists
+    if (!blog) {
+      return res.status(404).json({ msg: "Blog not found" });
+    }
+
+    // Check if the authenticated user is the author of the blog
+    if (blog.author.toString() !== userId) {
+      return res
+        .status(403)
+        .json({ msg: "You are not authorized to update this blog" });
+    }
+    let imageDataURL = null;
+    if (req.file) {
+      const imageBuffer = req.file.buffer;
+      const imageBase64 = imageBuffer.toString("base64");
+      imageDataURL = `data:${req.file.mimetype};base64,${imageBase64}`;
+    }
+
+    blog.title = title;
+    blog.banner = imageDataURL;
+    blog.desc = desc;
+    blog.content = content;
+
+    await blog.save();
+    res.status(200).send({ msg: "blog update" });
+  } catch (error) {
+    res.status(500).send({ msg: error.message });
+  }
+};
+
+const deleteBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
     const userId = req.user._id;
 
-
     const blog = await BlogModel.findOneAndDelete({
-      _id:id,
-      author:userId
+      _id: id,
+      author: userId,
     });
 
-    if(!blog) return res.status(404).json({
-      msg: "Blog not found or you are not authorized to delete this blog",
-    });
+    if (!blog)
+      return res.status(404).json({
+        msg: "Blog not found or you are not authorized to delete this blog",
+      });
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
 
 // Update a draft by blogId with authorization check
 const updateDraft = async (req, res) => {
   try {
-    const { id } = req.params; 
-    const { title, des, content, tags, image } = req.body; 
-    const authorId = req.userId; 
+    const { id } = req.params;
+    const { title, des, content, tags, image } = req.body;
+    const authorId = req.userId;
 
-    const existingDraft = await BlogModel.findOne({ _id: id,author:authorId , draft: true });
+    const existingDraft = await BlogModel.findOne({
+      _id: id,
+      author: authorId,
+      draft: true,
+    });
 
     if (!existingDraft) {
       return res.status(404).send({ msg: "Draft not found" });
     }
-
 
     // Use ternary operators to update the draft's fields
     existingDraft.title = title ? title : existingDraft.title;
     existingDraft.des = des ? des : existingDraft.des;
     existingDraft.content = content ? content : existingDraft.content;
     existingDraft.tags = tags ? tags : existingDraft.tags;
-    existingDraft.draft = false
+    existingDraft.draft = false;
 
     await existingDraft.save();
 
@@ -241,8 +255,49 @@ const updateDraft = async (req, res) => {
   }
 };
 
+const editProfile = async (req, res) => {
+  try {
+    const {
+      username,
+      bio,
+      youtube,
+      instagram,
+      facebook,
+      twitter,
+      github,
+      website,
+    } = req.body;
+    const authorId = req.userId;
+    let imageDataURL = null;
+    if (req.file) {
+      const imageBuffer = req.file.buffer;
+      const imageBase64 = imageBuffer.toString("base64");
+      imageDataURL = `data:${req.file.mimetype};base64,${imageBase64}`;
+    }
+
+    const updateProfile = await UserModel.findOne({ _id: authorId });
+
+    if (!updateProfile) return res.status(403).send({ msg: "Authornot found" });
+
+    updateProfile.personal_info.username = username;
+    updateProfile.personal_info.bio = bio;
+    updateProfile.personal_info.profile_img = imageDataURL;
+    updateProfile.personal_info.profile_img = imageDataURL;
+    updateProfile.social_links.youtube = youtube;
+    updateProfile.social_links.instagram = instagram;
+    updateProfile.social_links.facebook = facebook;
+    updateProfile.social_links.twitter = twitter;
+    updateProfile.social_links.github = github;
+    updateProfile.social_links.website = website;
+    await updateProfile.save();
+    res.status(200).send({ msg: "profile updated", updateProfile });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 module.exports = {
+  getAuthorById,
   getAllBlog,
   getBlogById,
   getAuthorBlog,
@@ -252,5 +307,6 @@ module.exports = {
   getDraftBlogById,
   updateBlog,
   deleteBlog,
-  updateDraft
+  updateDraft,
+  editProfile
 };

@@ -139,8 +139,6 @@ document.getElementById("publisBtn").addEventListener("click", async (e) => {
       console.log(error);
     }
   } else {
-    // Editing an existing blog
-    // Retrieve the draft data if available (assuming draftData contains the draft information)
     if (draftData) {
      const updateData = {
        title: draftData.title,

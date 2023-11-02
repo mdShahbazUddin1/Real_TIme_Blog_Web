@@ -16,8 +16,18 @@ const savePublish = document.getElementById("save-pub");
 const imageText = document.getElementById("img-txt");
 const titleParagraph = document.getElementById("Title");
 const storyParagraph = document.getElementById("storyP");
+const youtubelink = document.getElementById("youtube");
+const instalink = document.getElementById("instagram");
+const twitterlink = document.getElementById("twitter");
+const facebooklink = document.getElementById("facebook");
+const githublink = document.getElementById("github");
+const websitelink = document.getElementById("website");
 
+// -----------------------------------
 const BASEURL = `http://localhost:8080`;
+//------------------------------------
+
+
 profileDiv.addEventListener("click", () => {
   userOptions.classList.toggle("active");
   userOptions.style.display = "block";
@@ -106,8 +116,6 @@ imageInput.addEventListener("change", (event) => {
   }
 });
 
-
-
 function saveToLocalStorage() {
   const title = titleParagraph.textContent;
   const banner = previewImage.src;
@@ -166,6 +174,10 @@ bioText.addEventListener("input", updateCharCount);
 
 const fileInput = document.getElementById("fileInput");
 const userImg = document.querySelector(".user-img img");
+// edit
+const userFullname = document.getElementById("fullname")
+const userEmail = document.getElementById("usergmail")
+const userName = document.getElementById("username")
 
 // Add an event listener to the file input
 fileInput.addEventListener("change", function () {
@@ -195,12 +207,22 @@ const fethcDisplay = async () => {
 
 fethcDisplay();
 
-
 const displayBlog = async (data) => {
   const blogContainer = document.querySelector(".blog-card");
   blogContainer.innerHTML = ""; // Clear the existing content
 
   data.forEach((blog, index) => {
+    const mainProfileImage = document.getElementById("main-pic");
+
+    // Check if the blog has a valid user's profile image URL
+    if (
+      blog.author &&
+      blog.author.personal_info &&
+      blog.author.personal_info.profile_img
+    ) {
+      // Update the src attribute of the main-profile image with the user's profile image URL
+      mainProfileImage.src = blog.author.personal_info.profile_img;
+    }
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "blog-card-container");
     const leftCard = document.createElement("div");
@@ -250,22 +272,21 @@ const displayBlog = async (data) => {
     dltBtn.setAttribute("id", "dlt-btn");
     dltBtn.textContent = "Delete";
 
-    dltBtn.addEventListener("click",async()=>{
-      const response = await fetch(`${BASEURL}/blog/deleteblog/${blog._id}`,{
-        method:"DELETE",
-        headers:{
-         Authorization : localStorage.getItem("token")
-        }
+    dltBtn.addEventListener("click", async () => {
+      const response = await fetch(`${BASEURL}/blog/deleteblog/${blog._id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
-      const data = await response.json()
-       if (response.ok) {
-      console.log("blog deleted")
-         fethcDisplay();
-       } else {
-         console.log("failed to delte")
-       }
-
-    })
+      const data = await response.json();
+      if (response.ok) {
+        console.log("blog deleted");
+        fethcDisplay();
+      } else {
+        console.log("failed to delte");
+      }
+    });
 
     optBtn.appendChild(editBtn);
     optBtn.appendChild(dltBtn);
@@ -311,87 +332,82 @@ const displayBlog = async (data) => {
   });
 };
 
-
-
-const fecthSaveDraft = async()=>{
+const fecthSaveDraft = async () => {
   try {
-    const response = await fetch(`${BASEURL}/blog/getdraft`,{
-      method:"GET",
-      headers:{
-        Authorization:localStorage.getItem("token")
-      }
+    const response = await fetch(`${BASEURL}/blog/getdraft`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
     });
 
-    const data = await response.json()
-    displaySaveDraft(data)
-    console.log(data)
+    const data = await response.json();
+    displaySaveDraft(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
-fecthSaveDraft()
-
-const displaySaveDraft = async(data)=>{
-const draftContainer = document.querySelector(".draf");
-draftContainer.innerHTML = null
-
-data.forEach((saveDraft,index)=>{
-const draftCard = document.createElement("div")
-draftCard.setAttribute("class", "draftcard");
-const draftCardImgdiv = document.createElement("div");
-draftCardImgdiv.setAttribute("class", "draft-img");
-const draftCardImg = document.createElement("img");
-draftCardImg.src = saveDraft.banner
-draftCardImg.alt = "image"
-
-const draftTitleDiv = document.createElement("div");
-draftTitleDiv.setAttribute("class","draft-title")
-const draftBlog = document.createElement("div");
-draftBlog.setAttribute("class","drft-blg")
-const draftBlogPara = document.createElement("p");
-draftBlogPara.setAttribute("class", "draft-head");
-draftBlogPara.innerText = saveDraft.title
-const draftBlogPara2 = document.createElement("p");
-draftBlogPara2.setAttribute("class", "draft-small");
-const publishedAtDate = new Date(saveDraft.publishedAt); // Assuming that saveDraft.publishedAt is a valid date
-const options = {
-  weekday: "long",
-  year: "numeric",
-  month: "short",
-  day: "numeric",
 };
-const formattedDate = publishedAtDate.toLocaleDateString("en-US", options);
-draftBlogPara2.innerText = `Saved in Draft ${formattedDate}`;
 
-const draftBlogPublis = document.createElement("div");
-draftBlogPublis.setAttribute("class", "drat-publis");
-const draftBlogPublisBtn = document.createElement("button");
-draftBlogPublisBtn.setAttribute("id", "drftpublishbtn");
-draftBlogPublisBtn.innerText = "Publish Draft";
-draftBlogPublisBtn.addEventListener("click",()=>{
- const blogId = saveDraft._id; 
- window.location.href = `publish.html?id=${blogId}`;
-})
-draftBlogPublis.append(draftBlogPublisBtn);
-draftBlog.append(draftBlogPara, draftBlogPara2, draftBlogPublis);
-draftTitleDiv.append(draftBlog,)
-draftCardImgdiv.append(draftCardImg);
-draftCard.append(draftCardImgdiv, draftTitleDiv);
-draftContainer.append(draftCard);
-})
+fecthSaveDraft();
 
-}
+const displaySaveDraft = async (data) => {
+  const draftContainer = document.querySelector(".draf");
+  draftContainer.innerHTML = null;
 
-saveAsDraftBtn.addEventListener("click",async(e)=>{
-  e.preventDefault()
-   const title = titleParagraph.innerText;
-   const banner = previewImage.src;
-   const description = storyParagraph.innerText;
-   const image = imageInput.files[0]
+  data.forEach((saveDraft, index) => {
+    const draftCard = document.createElement("div");
+    draftCard.setAttribute("class", "draftcard");
+    const draftCardImgdiv = document.createElement("div");
+    draftCardImgdiv.setAttribute("class", "draft-img");
+    const draftCardImg = document.createElement("img");
+    draftCardImg.src = saveDraft.banner;
+    draftCardImg.alt = "image";
 
-   try {
-   
+    const draftTitleDiv = document.createElement("div");
+    draftTitleDiv.setAttribute("class", "draft-title");
+    const draftBlog = document.createElement("div");
+    draftBlog.setAttribute("class", "drft-blg");
+    const draftBlogPara = document.createElement("p");
+    draftBlogPara.setAttribute("class", "draft-head");
+    draftBlogPara.innerText = saveDraft.title;
+    const draftBlogPara2 = document.createElement("p");
+    draftBlogPara2.setAttribute("class", "draft-small");
+    const publishedAtDate = new Date(saveDraft.publishedAt); // Assuming that saveDraft.publishedAt is a valid date
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    const formattedDate = publishedAtDate.toLocaleDateString("en-US", options);
+    draftBlogPara2.innerText = `Saved in Draft ${formattedDate}`;
+
+    const draftBlogPublis = document.createElement("div");
+    draftBlogPublis.setAttribute("class", "drat-publis");
+    const draftBlogPublisBtn = document.createElement("button");
+    draftBlogPublisBtn.setAttribute("id", "drftpublishbtn");
+    draftBlogPublisBtn.innerText = "Publish Draft";
+    draftBlogPublisBtn.addEventListener("click", () => {
+      const blogId = saveDraft._id;
+      window.location.href = `publish.html?id=${blogId}`;
+    });
+    draftBlogPublis.append(draftBlogPublisBtn);
+    draftBlog.append(draftBlogPara, draftBlogPara2, draftBlogPublis);
+    draftTitleDiv.append(draftBlog);
+    draftCardImgdiv.append(draftCardImg);
+    draftCard.append(draftCardImgdiv, draftTitleDiv);
+    draftContainer.append(draftCard);
+  });
+};
+
+saveAsDraftBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const title = titleParagraph.innerText;
+  const banner = previewImage.src;
+  const description = storyParagraph.innerText;
+  const image = imageInput.files[0];
+
+  try {
     if (title === "" || description === "") {
       alert("Please fill in all fields before saving.");
       return; // Exit the function if any field is empty
@@ -401,26 +417,88 @@ saveAsDraftBtn.addEventListener("click",async(e)=>{
     const isDefaultImage = banner.includes("default-image.jpg");
 
     if (!isDefaultImage) {
-     const formData = new FormData();
-     formData.append("title", title);
-     formData.append("image", image);
-     formData.append("content",description);
-     const response = await fetch(`${BASEURL}/blog/savedraft`,{
-      method:"POST",
-      headers:{
-        Authorization:localStorage.getItem("token")
-      },
-      body:formData
-     });
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("image", image);
+      formData.append("content", description);
+      const response = await fetch(`${BASEURL}/blog/savedraft`, {
+        method: "POST",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+        body: formData,
+      });
 
-     const data = await response.json()
-     alert("draft saved")
+      const data = await response.json();
+      alert("draft saved");
     } else {
       alert("Please select an image before saving.");
     }
- 
-   } catch (error) {
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const getAuthor = async () => {
+  try {
+    const response = await fetch(`${BASEURL}/blog/author`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    const data = await response.json();
+    userImg.src = data.personal_info.profile_img
+    userFullname.innerText = data.personal_info.fullname
+    bioText.innerText = data.personal_info.bio
+    userEmail.innerText = data.personal_info.email
+    userName.innerText = `${data.personal_info.username}`
+    // link text will be here
+    // console.log("author",data)
+  } catch (error) {
     console.log(error)
-   }
-   
+  }
+};
+getAuthor();
+
+
+const profileUpdateBtn = document.getElementById("update").addEventListener("click",(e)=>{
+  e.preventDefault()
+  updateProfile()
 })
+
+const updateProfile = async()=>{
+  const username = userName.innerText
+
+  const userImage = fileInput.files[0];
+  const userProfileUpdate = new FormData()
+  userProfileUpdate.append("username", username);
+  userProfileUpdate.append("bio", bioText.innerText);
+  userProfileUpdate.append("youtube", youtubelink.value);
+  userProfileUpdate.append("instagram", instalink.value);
+  userProfileUpdate.append("twitter", twitterlink.value);
+  userProfileUpdate.append("facebook", facebooklink.value);
+  userProfileUpdate.append("github", githublink.value);
+  userProfileUpdate.append("website", websitelink.value);
+   if (userImage) {
+     userProfileUpdate.append("image", userImage);
+   }
+  try {
+    const response = await fetch(`${BASEURL}/blog/editprofile`,{
+      method:"PUT",
+      headers:{
+        Authorization:localStorage.getItem("token")
+      },
+      body:userProfileUpdate
+    });
+
+ if (response.ok) {
+   console.log("Profile update")
+ } else {
+   console.log("something went wrong")
+ }
+  } catch (error) {
+    console.log(error)
+  }
+}
