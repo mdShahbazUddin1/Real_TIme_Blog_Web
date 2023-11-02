@@ -3,6 +3,14 @@ const BASEURL = `http://localhost:8080`
 
 const title1 = document.getElementById("title1");
 const blogTitle = document.getElementById("title2");
+  const previewImage = document.getElementById("preview-image");
+  const bioDescription = document.getElementById("bio");
+const emptyP = document.getElementById("emptyP");
+const topicInput = document.querySelector(".topic p");
+const topicAdds = document.querySelector(".topic-adds");
+const tagsCount = document.querySelector(".tags");
+const urlParams = new URLSearchParams(window.location.search);
+const blogId = urlParams.get("id");
 
 function updateTitles(event) {
   const updatedText = event.target.textContent;
@@ -13,8 +21,7 @@ function updateTitles(event) {
 title1.addEventListener("input", updateTitles);
 blogTitle.addEventListener("input", updateTitles);
 
-const bioDescription = document.getElementById("bio");
-const emptyP = document.getElementById("emptyP");
+
 
 function updateBioDescription(event) {
   const updatedText = event.target.textContent;
@@ -49,9 +56,7 @@ function updateCharCount(event) {
   emptyP.textContent = updatedText;
 }
 
-const topicInput = document.querySelector(".topic p");
-const topicAdds = document.querySelector(".topic-adds");
-const tagsCount = document.querySelector(".tags");
+
 
 let remainingTags = 7;
 
@@ -98,37 +103,77 @@ if (LsData) {
   title1.textContent = LsData.title;
   blogTitle.textContent = LsData.title;
 
-  const previewImage = document.getElementById("preview-image");
+
   previewImage.src = lsBannerImage;
 }
+
+let draftData = null;
 
 document.getElementById("publisBtn").addEventListener("click", async (e) => {
   e.preventDefault();
 
-  const publisBlogData = new FormData();
-  publisBlogData.append("title", title1.innerText);
-  publisBlogData.append("image", dataURItoBlob(lsBannerImage)); // Convert Data URL to Blob
-  publisBlogData.append("des", bioDescription.innerText);
-  publisBlogData.append("content", LsData.description);
+  const publisBlogData = new FormData(); // Create a new FormData object
 
-  tagsArray.forEach((tag, index) => {
-    publisBlogData.append(`tags[${index}]`, tag);
-  });
+  if (!blogId) {
+    // Creating a new blog
+    publisBlogData.append("title", title1.innerText);
+    publisBlogData.append("image", dataURItoBlob(lsBannerImage)); // Convert Data URL to Blob
+    publisBlogData.append("des", bioDescription.innerText);
+    publisBlogData.append("content", LsData.description);
 
-  try {
-    const response = await fetch(`${BASEURL}/blog/createblog`, {
-      method: "POST",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-      body: publisBlogData,
+    tagsArray.forEach((tag, index) => {
+      publisBlogData.append(`tags[${index}]`, tag);
     });
-    const data = await response.json();
-    console.log("blog created", data);
-  } catch (error) {
-    console.log(error);
+    try {
+      const response = await fetch(`${BASEURL}/blog/createblog`, {
+        method: "POST",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+        body: publisBlogData,
+      });
+      const data = await response.json();
+      alert("Blog published");
+     window.location.href = "./index.html"
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    // Editing an existing blog
+    // Retrieve the draft data if available (assuming draftData contains the draft information)
+    if (draftData) {
+     const updateData = {
+       title: draftData.title,
+       banner: draftData.banner, // Assuming it's already a data URL
+       des: bioDescription.textContent,
+       content: draftData.content,
+       tags: tagsArray, // tagsArray is already an array of strings
+     };
+
+     try {
+       const response = await fetch(`${BASEURL}/blog/update/${draftData._id}`, {
+         method: "PUT",
+         headers: {
+           "Content-Type": "application/json", // Set the content type to JSON
+           Authorization: localStorage.getItem("token"),
+         },
+         body: JSON.stringify(updateData), // Convert to JSON
+       });
+
+       const data = await response.json();
+       alert("Blog published")
+       window.location.href = "./index.html";
+     } catch (error) {
+       console.log(error);
+     }
+    } else {
+      // Handle the case when draftData is not available.
+    }
   }
+
+  
 });
+
 
 function dataURItoBlob(dataURI) {
   const byteString = atob(dataURI.split(",")[1]);
@@ -142,5 +187,29 @@ function dataURItoBlob(dataURI) {
 
   return new Blob([ab], { type: mimeString });
 }
+
+
+
+const getDataFrmSaveDraft = async () => {
+  if (blogId) {
+    try {
+      const response = await fetch(`${BASEURL}/blog/draft/${blogId}`, {
+        method: "GET",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      draftData = await response.json();
+      title1.innerText = draftData.title;
+      blogTitle.innerText = draftData.title;
+      previewImage.src = draftData.banner
+      console.log(draftData)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+getDataFrmSaveDraft()
+
 
 

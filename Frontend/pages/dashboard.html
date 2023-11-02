@@ -33,7 +33,8 @@
                 </div>
 
                 <div class="profile">
-                    <img id="main-profile" src="https://lh3.googleusercontent.com/a/ACg8ocL9VfvdVUqbq4FaShYQOoMArnpl231ST8RsQRXYUvOh8is=s384-c"
+                    <img id="main-profile"
+                        src="https://lh3.googleusercontent.com/a/ACg8ocL9VfvdVUqbq4FaShYQOoMArnpl231ST8RsQRXYUvOh8is=s384-c"
                         alt="profile-image">
                     <div class="user-options">
                         <div class="options">
@@ -117,7 +118,7 @@
                             <button id="drft-btn">Drafts</button>
                         </div>
 
-                        
+
 
                         <div class="blog-card">
                             <!-- <div class="left-details">
@@ -153,11 +154,27 @@
                             </div> -->
                         </div>
 
-                        
-                        <div class="draf">
-                            <h1>hello</h1>
-                        </div>
 
+                        <div class="draf">
+                            <!-- <div class="draftcard">
+                                <div class="draft-img">
+                                    <img src="../assets/images/beach.jpeg" alt="">
+                                </div>
+
+
+                                <div class="draft-title">
+                                    <div class="drft-blg">
+                                        <p class="draft-head">NodeJS 20 is HERE! 10 Features that will blow your mind 🤯
+                                        </p>
+                                        <p class="draft-small">Saved in Draft 27 oct, Friday</p>
+
+                                        <div class="drat-publis">
+                                            <button id="drftpublishbtn">Publish Draft</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +203,7 @@
                 <h4>Create post</h4>
                 <div class="post-btn">
                     <button id="save-pub">Publish</button>
-                    <button>Save Draft</button>
+                    <button id="sava-draft">Save Draft</button>
                 </div>
                 <div class="post-img">
                     <div class="img-div">
@@ -195,11 +212,11 @@
                     </div>
                     <input type="file" id="image-input">
                     <div class="blg-title">
-                        <p contentEditable="true">Blog Title</p>
+                        <p id="Title" contentEditable="true">Blog Title</p>
                     </div>
                     <div class="blg-story">
                         <i class="fa-solid fa-plus"></i>
-                        <span contentEditable="true">Let's write an awesome story !</span>
+                        <span id="storyP" contentEditable="true">Let's write an awesome story !</span>
                     </div>
                 </div>
 
@@ -260,7 +277,7 @@
 
         <div id="change-pass">
             <div class="pop-up">
-                 <p><i class="fa-solid fa-check"></i>Hurray ! Password change</p>
+                <p><i class="fa-solid fa-check"></i>Hurray ! Password change</p>
             </div>
             <div class="form-container">
                 <h3>Change password</h3>
@@ -282,6 +299,7 @@
 
     </div>
 </body>
+
 </html>
 <script type="module" src="../scripts/index.js"></script>
 <script type="module" src="../scripts/dashboard.js"></script>

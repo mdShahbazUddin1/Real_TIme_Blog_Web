@@ -30,7 +30,6 @@ const blogSchema = mongoose.Schema(
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "user",
     },
     activity: {

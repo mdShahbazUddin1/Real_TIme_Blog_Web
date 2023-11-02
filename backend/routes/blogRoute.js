@@ -24,8 +24,13 @@ blogRoute.post(
   blogController.createBlog
 );
 blogRoute.get("/authorblog",auth,blogController.getAuthorBlog)
-blogRoute.post("/savedraft",auth,blogController.saveToDraft);
+blogRoute.post(
+  "/savedraft",auth,
+  upload.single("image"),
+  blogController.saveToDraft
+);
 blogRoute.get("/getdraft",auth,blogController.getDraftBlog);
+blogRoute.get("/draft/:blogId",auth, blogController.getDraftBlogById);
 blogRoute.put(
   "/updateblog",
   upload.single("image"),
@@ -34,6 +39,9 @@ blogRoute.put(
   blogController.updateBlog
 );
 blogRoute.delete("/deleteblog/:id",auth,blogController.deleteBlog)
+blogRoute.put("/update/:id",auth,blogController.updateDraft)
+
+
 
 
 

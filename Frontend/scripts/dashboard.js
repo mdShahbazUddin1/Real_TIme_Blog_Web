@@ -4,6 +4,7 @@ const links = document.querySelectorAll(".links a");
 const buttons = document.querySelectorAll(".create-blog button");
 const publishBtn = document.getElementById("publis-btn");
 const draftBtn = document.getElementById("drft-btn");
+const saveAsDraftBtn = document.getElementById("sava-draft");
 const publishBlog = document.querySelector(".blog-card");
 const draftBlog = document.querySelector(".draf");
 const rightUIs = document.querySelectorAll(
@@ -13,8 +14,8 @@ const imageInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
 const savePublish = document.getElementById("save-pub");
 const imageText = document.getElementById("img-txt");
-const titleParagraph = document.querySelector(".blg-title p");
-const storyParagraph = document.querySelector(".blg-story span");
+const titleParagraph = document.getElementById("Title");
+const storyParagraph = document.getElementById("storyP");
 
 const BASEURL = `http://localhost:8080`;
 profileDiv.addEventListener("click", () => {
@@ -186,7 +187,7 @@ const fethcDisplay = async () => {
     });
     const data = await resposne.json();
     displayBlog(data);
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -309,3 +310,117 @@ const displayBlog = async (data) => {
     blogContainer.append(cardContainer);
   });
 };
+
+
+
+const fecthSaveDraft = async()=>{
+  try {
+    const response = await fetch(`${BASEURL}/blog/getdraft`,{
+      method:"GET",
+      headers:{
+        Authorization:localStorage.getItem("token")
+      }
+    });
+
+    const data = await response.json()
+    displaySaveDraft(data)
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+fecthSaveDraft()
+
+const displaySaveDraft = async(data)=>{
+const draftContainer = document.querySelector(".draf");
+draftContainer.innerHTML = null
+
+data.forEach((saveDraft,index)=>{
+const draftCard = document.createElement("div")
+draftCard.setAttribute("class", "draftcard");
+const draftCardImgdiv = document.createElement("div");
+draftCardImgdiv.setAttribute("class", "draft-img");
+const draftCardImg = document.createElement("img");
+draftCardImg.src = saveDraft.banner
+draftCardImg.alt = "image"
+
+const draftTitleDiv = document.createElement("div");
+draftTitleDiv.setAttribute("class","draft-title")
+const draftBlog = document.createElement("div");
+draftBlog.setAttribute("class","drft-blg")
+const draftBlogPara = document.createElement("p");
+draftBlogPara.setAttribute("class", "draft-head");
+draftBlogPara.innerText = saveDraft.title
+const draftBlogPara2 = document.createElement("p");
+draftBlogPara2.setAttribute("class", "draft-small");
+const publishedAtDate = new Date(saveDraft.publishedAt); // Assuming that saveDraft.publishedAt is a valid date
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
+const formattedDate = publishedAtDate.toLocaleDateString("en-US", options);
+draftBlogPara2.innerText = `Saved in Draft ${formattedDate}`;
+
+const draftBlogPublis = document.createElement("div");
+draftBlogPublis.setAttribute("class", "drat-publis");
+const draftBlogPublisBtn = document.createElement("button");
+draftBlogPublisBtn.setAttribute("id", "drftpublishbtn");
+draftBlogPublisBtn.innerText = "Publish Draft";
+draftBlogPublisBtn.addEventListener("click",()=>{
+ const blogId = saveDraft._id; 
+ window.location.href = `publish.html?id=${blogId}`;
+})
+draftBlogPublis.append(draftBlogPublisBtn);
+draftBlog.append(draftBlogPara, draftBlogPara2, draftBlogPublis);
+draftTitleDiv.append(draftBlog,)
+draftCardImgdiv.append(draftCardImg);
+draftCard.append(draftCardImgdiv, draftTitleDiv);
+draftContainer.append(draftCard);
+})
+
+}
+
+saveAsDraftBtn.addEventListener("click",async(e)=>{
+  e.preventDefault()
+   const title = titleParagraph.innerText;
+   const banner = previewImage.src;
+   const description = storyParagraph.innerText;
+   const image = imageInput.files[0]
+
+   try {
+   
+    if (title === "" || description === "") {
+      alert("Please fill in all fields before saving.");
+      return; // Exit the function if any field is empty
+    }
+
+    // Check if the selected image is the default image
+    const isDefaultImage = banner.includes("default-image.jpg");
+
+    if (!isDefaultImage) {
+     const formData = new FormData();
+     formData.append("title", title);
+     formData.append("image", image);
+     formData.append("content",description);
+     const response = await fetch(`${BASEURL}/blog/savedraft`,{
+      method:"POST",
+      headers:{
+        Authorization:localStorage.getItem("token")
+      },
+      body:formData
+     });
+
+     const data = await response.json()
+     alert("draft saved")
+    } else {
+      alert("Please select an image before saving.");
+    }
+ 
+   } catch (error) {
+    console.log(error)
+   }
+   
+})
