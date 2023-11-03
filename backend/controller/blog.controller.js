@@ -281,8 +281,7 @@ const editProfile = async (req, res) => {
 
     updateProfile.personal_info.username = username;
     updateProfile.personal_info.bio = bio;
-    updateProfile.personal_info.profile_img = imageDataURL;
-    updateProfile.personal_info.profile_img = imageDataURL;
+    updateProfile.personal_info.profile_img = imageDataURL; // Set the profile image here
     updateProfile.social_links.youtube = youtube;
     updateProfile.social_links.instagram = instagram;
     updateProfile.social_links.facebook = facebook;

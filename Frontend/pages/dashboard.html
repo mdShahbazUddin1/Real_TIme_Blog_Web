@@ -33,8 +33,7 @@
                 </div>
 
                 <div class="profile">
-                    <img id="main-pic"
-                        src="https://www.nicepng.com/png/full/128-1280406_user-icon-png.png"
+                    <img id="main-pic" src="https://www.nicepng.com/png/full/128-1280406_user-icon-png.png"
                         alt="profile-image">
                     <div class="user-options">
                         <div class="options">
@@ -103,6 +102,7 @@
         </div>
 
         <div id="blog-ui">
+            <div id="loader"></div>
             <div class="blog-container">
                 <div class="blogDetails">
                     <h4>Manage Blogs</h4>
@@ -229,7 +229,7 @@
                 <div class="updt-pro">
                     <div class="updt-image">
                         <div class="user-img">
-                            <img src="../assets/images/beach.jpeg" alt="">
+                            <img src="" alt="">
 
                         </div>
                         <label for="fileInput" class="custom-file-upload">
@@ -261,12 +261,63 @@
                         <div class="updt-social">
                             <p>Add your social handle below</p>
                             <div class="social-input">
-                                <p id="youtube" contenteditable=true><i class="fa-brands fa-youtube"></i>https://</p>
-                                <p id="instagram" contenteditable=true><i class="fa-brands fa-instagram"></i>https://</p>
-                                <p id="twitter" contenteditable=true><i class="fa-brands fa-twitter"></i>https://</p>
-                                <p id="facebook" contenteditable=true><i class="fa-brands fa-facebook"></i>https://</p>
-                                <p id="github" contenteditable=true><i class="fa-brands fa-github"></i>https://</p>
-                                <p id="website" contenteditable=true><i class="fa-solid fa-link"></i>https://</p>
+                                <div>
+                                    <div >
+                                        <i class="fa-brands fa-youtube"></i>
+                                    </div>
+
+                                    <div>
+                                        <p id="youtube" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </div>
+                                    <div>
+                                        <p id="instagram" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <i class="fa-brands fa-facebook"></i>
+                                    </div>
+                                    <div>
+                                        <p id="facebook" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div>
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </div>
+                                    <div>
+                                        <p id="twitter" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <i class="fa-brands fa-github"></i>
+                                    </div>
+                                    <div>
+                                        <p id="github" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <i class="fa-solid fa-link"></i>
+                                    </div>
+                                    <div>
+                                        <p id="website" contenteditable="true">https://</p>
+                                    </div>
+                                </div>
+
+
+
+                        
                             </div>
                         </div>
                         <button id="update">Update</button>

@@ -584,21 +584,42 @@ width: 100%;
   display: grid;
   grid-template-columns: repeat(2,1fr);
   gap: 10px;
+  align-items: center;
 }
 
-.social-input p{
+.social-input div{
+  display: flex;
+  align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+  background-color: #eeeeee;
+  margin-bottom: 6px;
+}
+
+
+.social-input div div  p{
+  margin: 0;
   outline: none;
   border: none;
+  cursor: pointer;
+}
+
+/* .social-input p{
+  outline: none;
    background-color: #eeeeee;
   padding: 10px;
   border-radius: 10px;
   font-size: 12px;
   font-family: sans-serif;
+  min-width: 20px; 
+    border: 1px solid #ccc; 
+    display: inline-block;
+  
 }
 .social-input p i{
-  margin-right: 15px;
+  margin-right: 20px;
   color: #111111;
-}
+} */
 
 #update{
   margin-top: 15px;
@@ -701,6 +722,36 @@ cursor: pointer;
 }
 #change-form input:nth-child(3):active{
   scale: 0.9;
+}
+
+#loader {
+  display: none;
+  position: absolute;
+  top: 80%;
+  left: 55%;
+  transform: translate(-50%,-50%);
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  background: radial-gradient(circle closest-side,#000 94%,#0000) right/calc(200% - 1em) 100%;
+  animation: l24 1s infinite alternate linear;
+}
+
+#loader::before {
+  content: "Loading...";
+  line-height: 1em;
+  color: #0000;
+  background: inherit;
+  background-image: radial-gradient(circle closest-side,#fff 94%,#000);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes l24 {
+  100% {
+    background-position: left
+  }
 }
 
 

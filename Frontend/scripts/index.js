@@ -250,11 +250,14 @@ loadMorebtn.innerText = "Load More"
 }
 
 // Fetch and display the blog dataURL
+const loader = document.querySelector(".loader")
 const fetchBlog = async () => {
+  loader.style.display = "block"
   try {
     const response = await fetch(`${BASEURL}/blog/getallblog`);
     const data = await response.json();
     display(data);
+    loader.style.display = "none";
     console.log(data);
   } catch (error) {
     console.error(error);

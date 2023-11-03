@@ -235,6 +235,7 @@ body {
   width: 80%;
   margin: auto;
   margin-top: 80px;
+  position: relative;
   /* border: 1px solid black; */
 }
 .blog-section {
@@ -489,4 +490,34 @@ body {
   font-weight: 600;
   line-height: 22px;
   color: #2e2d2d;
+}
+
+.loader {
+  display: none;
+  position: absolute;
+  width: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  background: radial-gradient(circle closest-side,#000 94%,#0000) right/calc(200% - 1em) 100%;
+  animation: l24 1s infinite alternate linear;
+}
+
+.loader::before {
+  content: "Loading...";
+  line-height: 1em;
+  color: #0000;
+  background: inherit;
+  background-image: radial-gradient(circle closest-side,#fff 94%,#000);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes l24 {
+  100% {
+    background-position: left
+  }
 }

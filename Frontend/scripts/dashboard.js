@@ -188,7 +188,9 @@ fileInput.addEventListener("change", function () {
   }
 });
 
+const loader = document.getElementById("loader")
 const fethcDisplay = async () => {
+  loader.style.display = "block"
   try {
     const resposne = await fetch(`${BASEURL}/blog/authorblog`, {
       method: "GET",
@@ -199,6 +201,7 @@ const fethcDisplay = async () => {
     });
     const data = await resposne.json();
     displayBlog(data);
+    loader.style.display = "none";
     // console.log(data);
   } catch (error) {
     console.log(error);
@@ -439,6 +442,8 @@ saveAsDraftBtn.addEventListener("click", async (e) => {
   }
 });
 
+let data = null ;
+
 const getAuthor = async () => {
   try {
     const response = await fetch(`${BASEURL}/blog/author`, {
@@ -448,13 +453,19 @@ const getAuthor = async () => {
       },
     });
 
-    const data = await response.json();
+     data = await response.json();
     userImg.src = data.personal_info.profile_img
     userFullname.innerText = data.personal_info.fullname
     bioText.innerText = data.personal_info.bio
     userEmail.innerText = data.personal_info.email
     userName.innerText = `${data.personal_info.username}`
     // link text will be here
+    youtubelink.innerText = data.social_links.youtube
+    instalink.innerText = data.social_links.instagram
+    facebooklink.innerText = data.social_links.facebook
+    twitterlink.innerText = data.social_links.twitter
+    githublink.innerText = data.social_links.github
+    websitelink.innerText = data.social_links.website
     // console.log("author",data)
   } catch (error) {
     console.log(error)
@@ -475,15 +486,16 @@ const updateProfile = async()=>{
   const userProfileUpdate = new FormData()
   userProfileUpdate.append("username", username);
   userProfileUpdate.append("bio", bioText.innerText);
-  userProfileUpdate.append("youtube", youtubelink.value);
-  userProfileUpdate.append("instagram", instalink.value);
-  userProfileUpdate.append("twitter", twitterlink.value);
-  userProfileUpdate.append("facebook", facebooklink.value);
-  userProfileUpdate.append("github", githublink.value);
-  userProfileUpdate.append("website", websitelink.value);
-   if (userImage) {
-     userProfileUpdate.append("image", userImage);
-   }
+  userProfileUpdate.append("youtube", youtubelink.innerText);
+  userProfileUpdate.append("instagram", instalink.innerText);
+  userProfileUpdate.append("twitter", twitterlink.innerText);
+  userProfileUpdate.append("facebook", facebooklink.innerText);
+  userProfileUpdate.append("github", githublink.innerText);
+  userProfileUpdate.append("website", websitelink.innerText);
+
+  if (userImage) {
+    userProfileUpdate.append("image", userImage);
+  }
   try {
     const response = await fetch(`${BASEURL}/blog/editprofile`,{
       method:"PUT",
@@ -494,6 +506,7 @@ const updateProfile = async()=>{
     });
 
  if (response.ok) {
+  fethcDisplay()
    console.log("Profile update")
  } else {
    console.log("something went wrong")
