@@ -755,6 +755,39 @@ cursor: pointer;
 }
 
 
+.particle-container {
+  position: fixed; /* or absolute, depending on your layout */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Prevents particles from blocking clicks */
+  z-index: 999; /* Make sure it's above your content */
+}
+
+.particle {
+  position: absolute;
+  background-color: #ffffff; /* Set the background color or image */
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fade 1s ease-out; /* Customize animation duration and easing */
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+
+
 
 
 

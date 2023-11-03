@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/index.css" />
     <link rel="stylesheet" href="../styles/dashobard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <title>Document</title>
 </head>
 
@@ -47,7 +48,7 @@
                                 <a href="../pages/setting.html">Setting</a>
                             </div>
                             <div class="sign-out">
-                                <p>Sign Out</p>
+                                <p id="logout">Sign Out</p>
                                 <!-- <p>@ tanisha</p> -->
                             </div>
                         </div>
@@ -100,7 +101,7 @@
                 </div>
             </div>
         </div>
-
+<div class="particle-container"></div>
         <div id="blog-ui">
             <div id="loader"></div>
             <div class="blog-container">
@@ -121,6 +122,7 @@
 
 
                         <div class="blog-card">
+                            
                             <!-- <div class="left-details">
                                 <div class="blog-img">
                                     <img src="../assets/images/beach.jpeg" alt="">
@@ -328,31 +330,32 @@
 
         <div id="change-pass">
             <div class="pop-up">
-                <p><i class="fa-solid fa-check"></i>Hurray ! Password change</p>
+                <p><i class="fa-solid fa-check"></i></p>
             </div>
             <div class="form-container">
                 <h3>Change password</h3>
                 <form id="change-form">
                     <div>
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Current Password">
+                        <input type="password" id="curr" placeholder="Current Password">
                     </div>
                     <div>
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="New Password">
+                        <input type="password" id="new" placeholder="New Password">
                     </div>
 
-                    <input type="submit" id="chnage-btn" value="Change Password">
+                    <input type="submit" value="Change Password">
                 </form>
             </div>
 
         </div>
-
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script type="module" src="../scripts/index.js"></script>
+    <script type="module" src="../scripts/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    <script type="module" src="../scripts/changepass.js"></script>
+    <script type="module" src="../scripts/logout.js"></script>
 </body>
 
 </html>
-<script type="module" src="../scripts/index.js"></script>
-<script type="module" src="../scripts/dashboard.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
-<script type="module" src="../scripts/changepass.js"></script>

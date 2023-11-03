@@ -258,7 +258,7 @@ const fetchBlog = async () => {
     const data = await response.json();
     display(data);
     loader.style.display = "none";
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.error(error);
   }

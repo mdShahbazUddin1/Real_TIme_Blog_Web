@@ -85,6 +85,8 @@ const loginUser = async () => {
   }
 };
 
+
+
 loginWithGoogle.addEventListener("click", async () => {
   try {
     const auth = getAuth(firebaseApp); // Initialize the auth service
@@ -102,8 +104,7 @@ loginWithGoogle.addEventListener("click", async () => {
       body: JSON.stringify({ access_token }),
     });
     const data = await response.json()
-    console.log(data)
-    
+  
     // Handle the response from your API here
     if (response.status === 200) {
       (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");

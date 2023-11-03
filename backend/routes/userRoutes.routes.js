@@ -9,6 +9,7 @@ userRouter.post("/register",userController.register);
 userRouter.post("/login",userController.login);
 userRouter.post("/googleAuth",userController.googleAuth);
 userRouter.get("/logout",auth, userController.logout);
+userRouter.post("/changepassword",auth, userController.changePassword);
 
 
 module.exports = {userRouter}

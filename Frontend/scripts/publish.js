@@ -134,7 +134,7 @@ document.getElementById("publisBtn").addEventListener("click", async (e) => {
       });
       const data = await response.json();
       alert("Blog published");
-     window.location.href = "./index.html"
+     window.location.href = "../pages/dashboard.html"
     } catch (error) {
       console.log(error);
     }
@@ -160,13 +160,11 @@ document.getElementById("publisBtn").addEventListener("click", async (e) => {
 
        const data = await response.json();
        alert("Blog published")
-       window.location.href = "./index.html";
+        window.location.href = "../pages/dashboard.html";
      } catch (error) {
        console.log(error);
      }
-    } else {
-      // Handle the case when draftData is not available.
-    }
+    } 
   }
 
   

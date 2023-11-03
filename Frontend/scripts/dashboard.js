@@ -189,6 +189,7 @@ fileInput.addEventListener("change", function () {
 });
 
 const loader = document.getElementById("loader")
+
 const fethcDisplay = async () => {
   loader.style.display = "block"
   try {
@@ -200,9 +201,14 @@ const fethcDisplay = async () => {
       },
     });
     const data = await resposne.json();
-    displayBlog(data);
     loader.style.display = "none";
-    // console.log(data);
+     if (data && data.length > 0) {
+       displayBlog(data);
+       console.log(data);
+     } else {
+       console.log("No blogs found for the user");
+     }
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -433,6 +439,7 @@ saveAsDraftBtn.addEventListener("click", async (e) => {
       });
 
       const data = await response.json();
+      fecthSaveDraft()
       alert("draft saved");
     } else {
       alert("Please select an image before saving.");

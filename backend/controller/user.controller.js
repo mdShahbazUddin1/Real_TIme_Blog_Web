@@ -160,7 +160,37 @@ const googleAuth = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const { currentPass, newPass } = req.body;
+    const authorId = req.userId; // Assuming you have a middleware to set the userId in req
 
+    const user = await UserModel.findOne({ _id: authorId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isPassword = await bcrypt.compare(
+      currentPass,
+      user.personal_info.password
+    );
+
+    if (!isPassword) {
+      return res.status(403).send({ message: "Current password is wrong" });
+    }
+
+    const hashedNewPass = await bcrypt.hash(newPass, 10);
+
+    user.personal_info.password = hashedNewPass; // Update the password field
+
+    await user.save(); // Save the updated user document
+
+    res.status(200).send({ message: "Password changed" });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 const logout = async (req, res) => {
   try {
@@ -185,5 +215,6 @@ module.exports = {
   register,
   login,
   googleAuth,
-  logout
+  logout,
+  changePassword
 };
