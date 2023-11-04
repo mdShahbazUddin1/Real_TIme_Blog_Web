@@ -31,6 +31,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Function to check if the user is logged in
+const isLoggedIn = () => {
+  return !!localStorage.getItem("token"); // Check if the token exists in local storage
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the user is logged in
+  if (!isLoggedIn()) {
+    // Redirect to the login page
+    window.location.href = "./pages/signin.html"; // Replace "login.html" with the actual login page URL
+  }
+
+  // Add your other event listeners or functions here
+});
+
+
 function display(data) {
   mainContainer.innerHTML = null;
 

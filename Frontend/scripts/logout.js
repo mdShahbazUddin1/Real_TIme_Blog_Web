@@ -10,7 +10,7 @@ const logout = async () => {
     });
     if (response.ok) {
       localStorage.clear()
-      window.location.href = "../index.html";
+      window.location.href = "./pages/signin.html";
     }
   } catch (error) {
     console.log(error);

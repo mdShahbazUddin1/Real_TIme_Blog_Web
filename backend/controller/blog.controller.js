@@ -2,20 +2,20 @@ const { BlogModel } = require("../models/Blog");
 const uuid = require("uuid");
 const { UserModel } = require("../models/Users");
 
-
-const getAuthorById = async(req,res) =>{
+const getAuthorById = async (req, res) => {
   try {
     const authorId = req.userId;
 
-    const isAuthorPresent = await UserModel.findOne({_id:authorId});
+    const isAuthorPresent = await UserModel.findOne({ _id: authorId });
 
-    if(!isAuthorPresent) return res.status(403).send({msg:"Author not found"})
+    if (!isAuthorPresent)
+      return res.status(403).send({ msg: "Author not found" });
 
-    res.status(200).send(isAuthorPresent)
+    res.status(200).send(isAuthorPresent);
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
-}
+};
 
 const getAllBlog = async (req, res) => {
   try {
@@ -40,6 +40,19 @@ const getBlogById = async (req, res) => {
     if (!blog) {
       return res.status(400).send({ msg: "Blog not found" });
     }
+
+    // Increment the total_reads in the author's account_info
+    const authorId = blog.author;
+    const author = await UserModel.findById(authorId);
+    if (author) {
+      author.account_info.total_reads += 1;
+      await author.save();
+    }
+
+    // Increment the reads count for the blog
+    blog.reads += 1;
+    await blog.save();
+
     res.status(200).send(blog);
   } catch (error) {
     console.error(error);
@@ -67,6 +80,37 @@ const getAuthorBlog = async (req, res) => {
   }
 };
 
+const likeBlog = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the blog ID
+    const userId = req.userId; // Get the user's ID who liked the blog
+
+    // Find the blog by its ID
+    const blog = await BlogModel.findById(id);
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Increment total_likes for the blog by 1
+    blog.activity.total_likes += 1;
+    await blog.save();
+
+    // Update the user's account_info.total_likes by 1
+    const user = await UserModel.findById(userId);
+    if (user) {
+      user.account_info.total_likes += 1;
+      await user.save();
+    }
+
+    res.status(200).json({ message: "Blog liked" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while liking the blog." });
+  }
+};
+
+
 const createBlog = async (req, res) => {
   try {
     const authorId = req.userId;
@@ -92,6 +136,12 @@ const createBlog = async (req, res) => {
     });
 
     await newBlog.save();
+
+    const author = await UserModel.findById(authorId);
+    if (author) {
+      author.account_info.total_posts += 1;
+      await author.save();
+    }
 
     res.status(200).send({ msg: "Blog created" });
   } catch (error) {
@@ -197,6 +247,11 @@ const updateBlog = async (req, res) => {
     blog.content = content;
 
     await blog.save();
+     const author = await UserModel.findById(authorId);
+     if (author) {
+       author.account_info.total_posts += 1;
+       await author.save();
+     }
     res.status(200).send({ msg: "blog update" });
   } catch (error) {
     res.status(500).send({ msg: error.message });
@@ -217,6 +272,15 @@ const deleteBlog = async (req, res) => {
       return res.status(404).json({
         msg: "Blog not found or you are not authorized to delete this blog",
       });
+
+    await BlogModel.deleteOne({ _id: id, author: userId });
+
+    // Update the user's total_posts in the account_info field (decrement by 1)
+    const author = await UserModel.findById(userId);
+    if (author) {
+      author.account_info.total_posts -= 1;
+      await author.save();
+    }
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (error) {
     res.status(500).send(error.message);
@@ -227,7 +291,7 @@ const deleteBlog = async (req, res) => {
 const updateDraft = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, des, content, tags, image } = req.body;
+    const { title, des, content, tags } = req.body;
     const authorId = req.userId;
 
     const existingDraft = await BlogModel.findOne({
@@ -248,8 +312,13 @@ const updateDraft = async (req, res) => {
     existingDraft.draft = false;
 
     await existingDraft.save();
+    const author = await UserModel.findById(authorId);
+    if (author) {
+      author.account_info.total_posts += 1; // Increment by 1 for publishing a draft
+      await author.save();
+    }
 
-    res.status(200).send({ msg: "Draft updated" });
+    res.status(200).send({ msg: "Draft updated and published" });
   } catch (error) {
     res.status(500).send({ msg: error.message });
   }
@@ -307,5 +376,6 @@ module.exports = {
   updateBlog,
   deleteBlog,
   updateDraft,
-  editProfile
+  editProfile,
+  likeBlog
 };

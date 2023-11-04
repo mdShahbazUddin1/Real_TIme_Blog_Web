@@ -113,7 +113,7 @@ loginWithGoogle.addEventListener("click", async () => {
       rightNavDiv.style.width = "18%";
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("token", data.token);
-      window.location.href = "../pages/dashboard.html";
+      window.location.href = "../index.html";
       // console.log("Login with your API successful.");
     } else {
       console.error("API login error:", response.status);
