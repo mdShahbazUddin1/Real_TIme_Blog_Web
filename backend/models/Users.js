@@ -116,6 +116,7 @@ const userSchema = mongoose.Schema(
       },
     ],
   },
+
   {
     timestamps: {
       createdAt: "joinedAt",

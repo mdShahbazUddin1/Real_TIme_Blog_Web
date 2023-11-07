@@ -162,6 +162,7 @@ body {
   height: 6px;
   border-radius: 15px;
   background-color: red;
+  visibility:hidden;
 }
 .profile {
   /* position: relative; */
@@ -352,9 +353,10 @@ body {
   font-family: "Poppins";
   border-radius: 15px;
 }
-.fa-heart {
-  color: #555454;
+.fa-solid {
+  color: #afafaf;
   margin-right: 10px;
+  cursor: pointer;
 }
 .like {
   color: #555454;

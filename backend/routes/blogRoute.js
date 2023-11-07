@@ -45,7 +45,7 @@ blogRoute.put(
   upload.single("image"),
   blogController.editProfile
 );
-blogRoute.get("/likeblog/:id", auth, blogController.likeBlog);
+// blogRoute.post("/likeblog/:blogId", auth, blogController.likeBlog);
 
 
 

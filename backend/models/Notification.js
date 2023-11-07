@@ -1,4 +1,4 @@
-const mongoose = required("mongoose");
+const mongoose = require("mongoose");
 
 const notificationSchema = mongoose.Schema(
   {
@@ -8,31 +8,31 @@ const notificationSchema = mongoose.Schema(
       required: true,
     },
     blog: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "blogs",
+      ref: "blog",
     },
     notification_for: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "users",
+      ref: "user",
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "users",
+      ref: "user",
     },
     comment: {
-      type: Schema.Types.ObjectId,
-      ref: "comments",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comment",
     },
     reply: {
-      type: Schema.Types.ObjectId,
-      ref: "comments",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comment",
     },
     replied_on_comment: {
-      type: Schema.Types.ObjectId,
-      ref: "comments",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comment",
     },
     seen: {
       type: Boolean,

@@ -40,7 +40,7 @@ const commentSchema = mongoose.Schema(
   }
 );
 
-const CommentModel = mongoose.model("comments", commentSchema);
+const CommentModel = mongoose.model("comment", commentSchema);
 
 module.exports = {
     CommentModel

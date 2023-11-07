@@ -52,12 +52,18 @@ const blogSchema = mongoose.Schema(
     },
     comments: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "comments",
+      ref: "comment",
     },
     draft: {
       type: Boolean,
       default: false,
     },
+    likedBlogs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "blog",
+      },
+    ],
   },
   {
     timestamps: {

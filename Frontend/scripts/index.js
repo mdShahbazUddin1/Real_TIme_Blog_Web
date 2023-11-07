@@ -1,7 +1,7 @@
 let BASEURL = `http://localhost:8080`;
 
 const mainContainer = document.querySelector(".blog-main");
-const mainProfile = document.getElementById("main-profile")
+const mainProfile = document.getElementById("main-profile");
 document.addEventListener("DOMContentLoaded", function () {
   // Get the signin and signup buttons
   const nofiDiv = document.querySelector(".notification");
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to check if the user is logged in
-const isLoggedIn = () => {
+const isLoggedIn = async() => {
   return !!localStorage.getItem("token"); // Check if the token exists in local storage
 };
 
@@ -46,8 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add your other event listeners or functions here
 });
 
-
-function display(data) {
+async function display(data) {
   mainContainer.innerHTML = null;
 
   let blogSection = document.createElement("div");
@@ -57,12 +56,12 @@ function display(data) {
   let ul = document.createElement("ul");
   let li = document.createElement("li");
   li.innerHTML = "Home";
-let loadMore = document.createElement("div");
-loadMore.setAttribute("class","load-more")
-let loadMorebtn = document.createElement("button");
-loadMorebtn.innerText = "Load More"
+  let loadMore = document.createElement("div");
+  loadMore.setAttribute("class", "load-more");
+  let loadMorebtn = document.createElement("button");
+  loadMorebtn.innerText = "Load More";
   ul.append(li);
-  loadMore.append(loadMorebtn)
+  loadMore.append(loadMorebtn);
   leftBlog.append(ul);
 
   let rightblog = document.createElement("div");
@@ -89,26 +88,25 @@ loadMorebtn.innerText = "Load More"
     const button = document.createElement("button");
     button.textContent = item;
     rightfilterOptions.appendChild(button);
-      
- button.addEventListener("click", () => {
-   if (button.classList.contains("selected")) {
-     // If already selected, deselect it and set li text to "Home"
-     button.classList.remove("selected");
-     li.innerHTML = "Home";
-   } else {
-     // Deselect any other selected button
-     document
-       .querySelectorAll(".filter-options button.selected")
-       .forEach((btn) => {
-         btn.classList.remove("selected");
-       });
 
-     // Select the button and update li text
-     button.classList.add("selected");
-     li.innerHTML = item;
-   }
- });
+    button.addEventListener("click", () => {
+      if (button.classList.contains("selected")) {
+        // If already selected, deselect it and set li text to "Home"
+        button.classList.remove("selected");
+        li.innerHTML = "Home";
+      } else {
+        // Deselect any other selected button
+        document
+          .querySelectorAll(".filter-options button.selected")
+          .forEach((btn) => {
+            btn.classList.remove("selected");
+          });
 
+        // Select the button and update li text
+        button.classList.add("selected");
+        li.innerHTML = item;
+      }
+    });
   });
 
   const trendingDiv = document.createElement("div");
@@ -123,20 +121,20 @@ loadMorebtn.innerText = "Load More"
   trendingDiv.append(trendingDivIcon);
   rightfilter.append(rightfilterText, rightfilterOptions);
   rightblog.append(rightfilter, trendingDiv);
-
+  fetchBlog();
   data.forEach((blog, index) => {
-    
-     const mainProfileImage = document.getElementById("main-profile");
+    if (
+      blog.author &&
+      blog.author.personal_info &&
+      blog.author.personal_info.profile_img
+    ) {
+      mainProfile.src = blog.author.personal_info.profile_img;
+    } else {
+      console.error(
+        "Author or personal_info data, or profile_img is missing in the response"
+      );
+    }
 
-     // Check if the blog has a valid user's profile image URL
-     if (
-       blog.author &&
-       blog.author.personal_info &&
-       blog.author.personal_info.profile_img
-     ) {
-       // Update the src attribute of the main-profile image with the user's profile image URL
-       mainProfileImage.src = blog.author.personal_info.profile_img;
-     }
     let userBlog = document.createElement("div");
     userBlog.setAttribute("class", "user-blog-info");
     let userCard = document.createElement("div");
@@ -185,7 +183,42 @@ loadMorebtn.innerText = "Load More"
 
     let catergoryHeart = document.createElement("div");
     const heartIcon = document.createElement("i");
-    heartIcon.classList.add("fa-regular", "fa-heart");
+    heartIcon.classList.add("fa-solid", "fa-heart");
+
+    // console.log(blog.author);
+    if (blog.likedBlogs.includes(blog.author._id)) {
+      heartIcon.style.color = "red";
+    }
+
+    heartIcon.addEventListener("click", async () => {
+      if (heartIcon.style.color !== "red") {
+        try {
+          const response = await fetch(`${BASEURL}/like/likeblog/${blog._id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          });
+          if (response.ok) {
+            heartIcon.style.color = "red";
+            likeCount.textContent = parseInt(likeCount.textContent) + 1;
+
+            // Call fetchBlog to refresh the blog data
+            fetchBlog();
+          } else if (response.status === 400) {
+            console.log("Blog is already liked");
+          } else {
+            console.log("Failed to like the blog");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+
+    // Append catergoryHeart and heartIcon to your document
+
     const likeCount = document.createElement("span");
     likeCount.classList.add("like");
     likeCount.textContent = blog.activity.total_likes;
@@ -203,7 +236,7 @@ loadMorebtn.innerText = "Load More"
     userDetails.append(userImg, userName, userDate);
     userCard.append(userDetails, catergory);
     userBlog.append(userCard);
-    leftBlog.append(userBlog, blogDetails, catergory,loadMore);
+    leftBlog.append(userBlog, blogDetails, catergory, loadMore);
   });
 
   // Sort the data array by likes in descending order
@@ -253,7 +286,7 @@ loadMorebtn.innerText = "Load More"
 
     topTrending.append(topLeader, trendingBlog);
     topLeader.append(topCount);
-    topUserImg.append(UserImg)
+    topUserImg.append(UserImg);
     trendingBlogDet.append(topUserImg, topUsername, topPublishDate);
     trendingBlog.append(trendingBlogDet, topBlogTitle);
     topBlogTitle.append(topBlogText);
@@ -262,21 +295,78 @@ loadMorebtn.innerText = "Load More"
 
   blogSection.append(leftBlog, rightblog);
   mainContainer.append(blogSection);
-  // fetchBlog()
 }
 
 // Fetch and display the blog dataURL
-const loader = document.querySelector(".loader")
+const loader = document.querySelector(".loader");
 const fetchBlog = async () => {
-  loader.style.display = "block"
+  loader.style.display = "block";
   try {
     const response = await fetch(`${BASEURL}/blog/getallblog`);
     const data = await response.json();
     display(data);
     loader.style.display = "none";
-    // console.log(data);
+    // console.log(data);z
   } catch (error) {
     console.error(error);
   }
 };
 fetchBlog();
+
+async function getNotifications() {
+  try {
+    const response = await fetch(`${BASEURL}/noti/getnotification`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (response.ok) {
+      const notificationAlert = document.getElementById("notialert");
+      const data = await response.json();
+
+      if (data.filter((notification) => !notification.seen).length > 0) {
+        notificationAlert.style.visibility = "visible";
+      }
+    } else {
+      console.error("Failed to fetch notifications");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+getNotifications();
+setInterval(getNotifications, 20000);
+
+// // Function to hide the notification when the user clicks on it
+async function hideNotification() {
+  const notificationAlert = document.getElementById("notialert");
+  notificationAlert.style.visibility = "hidden";
+}
+
+// // Add an event listener to the notification span or element
+const notificationSpan = document.querySelector(".notification");
+notificationSpan.addEventListener("click", () => {
+  hideNotification();
+  markSeen();
+});
+
+async function markSeen() {
+  try {
+    const response = await fetch(`${BASEURL}/noti/markasseen`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (response.ok) {
+      console.log("Notifications marked as seen");
+    } else {
+      console.log("No new notifications found");
+    }
+  } catch (error) {
+    console.log(data);
+  }
+}

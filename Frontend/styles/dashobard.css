@@ -338,6 +338,23 @@ html, body {
   border-radius: 15px;
   text-align: center;
 }
+#notification-container{
+ margin-top: 15px;
+}
+#notification-container ul{
+
+}
+
+#notification-container ul li{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 20px;
+  margin-top: 5px;
+  list-style:none;
+  border-radius: 10px;
+  font-family: sans-serif;
+ font-size: 14px;
+ color: #444;
+}
 
 #blog-create {
   width: 80%;
