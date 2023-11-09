@@ -2,27 +2,27 @@ let BASEURL = `http://localhost:8080`;
 
 const mainContainer = document.querySelector(".blog-main");
 const mainProfile = document.getElementById("main-profile");
-document.addEventListener("DOMContentLoaded", function () {
-  // Get the signin and signup buttons
-  const nofiDiv = document.querySelector(".notification");
-  const profileDiv = document.querySelector(".profile");
-  const signinDiv = document.querySelector(".signin");
-  const signupDiv = document.querySelector(".signup");
-  const rightNavDiv = document.querySelector(".rightNav");
+ const nofiDiv = document.querySelector(".notification");
+ const profileDiv = document.querySelector(".profile");
+ const signinDiv = document.querySelector(".signin");
+ const signupDiv = document.querySelector(".signup");
+ const rightNavDiv = document.querySelector(".rightNav");
+ const loader = document.querySelector(".loader");
 
-  // Check if the user is logged in
-  const loggedIn = localStorage.getItem("loggedIn");
+ // Check if the user is logged in
+ const loggedIn = localStorage.getItem("loggedIn");
 
-  // Check if the loggedIn variable is "true"
-  if (loggedIn === "true") {
-    // User is logged in, hide signin and signup buttons
+document.addEventListener("DOMContentLoaded", async function () {
+  const loggedIn = await isLoggedIn(); // Check the login status
+  if (loggedIn) {
+    // User is logged in, update the UI accordingly
     signinDiv.style.display = "none";
     signupDiv.style.display = "none";
     nofiDiv.style.display = "block";
     profileDiv.style.display = "block";
     rightNavDiv.style.width = "18%";
   } else {
-    // User is not logged in, show signin and signup buttons
+    // User is not logged in, show the signin and signup buttons
     signinDiv.style.display = "inline";
     signupDiv.style.display = "inline";
     nofiDiv.style.display = "none";
@@ -32,19 +32,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to check if the user is logged in
-const isLoggedIn = async() => {
+const isLoggedIn = async () => {
   return !!localStorage.getItem("token"); // Check if the token exists in local storage
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Check if the user is logged in
-  if (!isLoggedIn()) {
+// Handle redirection if not logged in
+document.addEventListener("DOMContentLoaded", async function () {
+  const loggedIn = await isLoggedIn(); // Check the login status
+  if (!loggedIn) {
     // Redirect to the login page
-    window.location.href = "./pages/signin.html"; // Replace "login.html" with the actual login page URL
+    window.location.href = "./pages/signin.html"; // Replace with the actual login page URL
   }
-
-  // Add your other event listeners or functions here
 });
+
 
 async function display(data) {
   mainContainer.innerHTML = null;
@@ -206,6 +206,7 @@ async function display(data) {
 
             // Call fetchBlog to refresh the blog data
             fetchBlog();
+            loader.style.display = "none"
           } else if (response.status === 400) {
             console.log("Blog is already liked");
           } else {
@@ -224,7 +225,7 @@ async function display(data) {
     likeCount.textContent = blog.activity.total_likes;
 
     blogDetails.addEventListener("click", () => {
-      window.location.href = `blog.html?id=${blog._id}`;
+      window.location.href = `./pages/blog.html?id=${blog._id}`;
     });
     catergoryHeart.append(heartIcon, likeCount);
     catergoryDiv.append(catergoryPara);
@@ -298,7 +299,7 @@ async function display(data) {
 }
 
 // Fetch and display the blog dataURL
-const loader = document.querySelector(".loader");
+
 const fetchBlog = async () => {
   loader.style.display = "block";
   try {
@@ -336,8 +337,7 @@ async function getNotifications() {
     console.error(error);
   }
 }
-getNotifications();
-setInterval(getNotifications, 20000);
+
 
 // // Function to hide the notification when the user clicks on it
 async function hideNotification() {
@@ -370,3 +370,6 @@ async function markSeen() {
     console.log(data);
   }
 }
+
+getNotifications();
+setInterval(getNotifications, 20000);

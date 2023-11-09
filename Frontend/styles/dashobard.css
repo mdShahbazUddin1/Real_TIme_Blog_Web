@@ -338,12 +338,12 @@ html, body {
   border-radius: 15px;
   text-align: center;
 }
+
+
 #notification-container{
  margin-top: 15px;
 }
-#notification-container ul{
-
-}
+ 
 
 #notification-container ul li{
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

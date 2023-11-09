@@ -73,7 +73,7 @@ const loginUser = async () => {
           rightNavDiv.style.width = "18%";
           localStorage.setItem("loggedIn", "true");
           localStorage.setItem("token", data.token);
-          window.location.href = "../pages/dashboard.html";
+          window.location.href = "../index.html";
         }, 2000);
       }
     }

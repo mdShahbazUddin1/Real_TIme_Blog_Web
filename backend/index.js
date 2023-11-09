@@ -7,6 +7,7 @@ const { blogRoute } = require("./routes/blogRoute");
 require("dotenv").config();
 const likeRouter = require("./routes/like.routes.js");
 const { notifyRouter } = require("./routes/notification.controller.js");
+const { commentRoute } = require("./routes/writecomment.routes.js");
 
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -24,6 +25,7 @@ app.use("/user", userRouter);
 app.use("/blog", blogRoute);
 app.use("/like", likeRouter);
 app.use("/noti", notifyRouter);
+app.use("/comment", commentRoute);
 
 
 app.listen(8080, async () => {

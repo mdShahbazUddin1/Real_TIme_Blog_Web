@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/blog.css">
+    <link rel="stylesheet" href="../styles/dashobard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <title>Blog</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navItem">
+            <div class="leftnav">
+                <div class="logo">
+                    <a href="../index.html"><img src="../assets/images/logo.png" alt="" /></a>
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Search" />
+                </div>
+            </div>
+            <div class="rightNav">
+                <div class="write-box">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <p>Write</p>
+                </div>
+                <!--  -->
+                <div class="notification">
+                    <a><i class="fa-regular fa-bell"><span id="notialert"></span></i></a>
+                </div>
+
+                <div class="profile">
+                    <img id="main-profile" src="https://www.nicepng.com/png/full/128-1280406_user-icon-png.png">
+                    <div class="user-options">
+                        <div class="options">
+                            <div>
+                                <a href="./pages/profile.html">Profile</a>
+                            </div>
+                            <div>
+                                <a href="./pages/dashboard.html">Dashboard</a>
+                            </div>
+                            <div>
+                                <a href="./pages/setting.html">Setting</a>
+                            </div>
+                            <div class="sign-out">
+                                <p id="logout">Sign Out</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="signin">
+                    <a href="./pages/signin.html"><button id="signin">Sign In</button></a>
+                </div>
+                <div class="signup">
+                    <a href="./pages/signup.html"><button id="signup">Sign Up</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="right-drawer">
+            <div class="comment-section">
+                <div class="response">
+                    <div>
+                        <h3 class="res">Response </h3>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-x"></i>
+                    </div>
+
+                </div>
+
+                <!-- comment -->
+                <div class="comment-box">
+                    <div class="comment-user">
+                        <div>
+                            <img src="../assets/images/profile-user_64572.png" alt="" class="main-image">
+                        </div>
+                        <p class="comment-username">username</p>
+                    </div>
+                    <!-- whts your thought -->
+                    <div class="thoughts">
+                        <p class="write-thought" contenteditable="true">Leave Comments ...</p>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="submit" id="res-btn">Comment</button>
+                    </div>
+
+                </div>
+
+                <div class="user-comment">
+                    <div class="comment-card">
+                        <div class="comment-user-image">
+                            <div>
+                                <img src="../assets/images/beach.jpeg" alt="">
+                            </div>
+                            <div class="userName">
+                                <p>username</p>
+                            </div>
+                        </div>
+
+                        <div class="user-comment-text">
+                            <p>Hello</p>
+                        </div>
+
+                        <div class="reply">
+                            <div>
+                                <div>
+                                    <i class="fa-regular fa-comment-dots"></i>
+                                    <span>0 Reply</span>
+                                </div>
+
+                                <div>
+                                    <p>Reply</p>
+                                   
+                                </div>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+
+
+                        </div>
+  
+                        <div class="leave-comment">
+                            <p contenteditable="true">Leave reply...</p>
+                        </div>
+                        <div>
+                            <button type="submit" id="reply-btn">Reply</button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- main blog -->
+
+    <div class="main-blog-container">
+
+
+        <!-- <div class="blog-sections">
+            <div class="blog-user-info">
+                <div class="blog-user">
+                    <h1>7 Developer Portfolio for inspiration</h1>
+                    <div class="blog-user-section">
+                        <div class="blog-user-image">
+                            <img src="../assets/images/profile-user_64572.png" alt="">
+                        </div>
+
+                        <div class="blog-user-details">
+                            <p>Username</p>
+                            <p>08 nov 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="share-details">
+                <div class="like-comment">
+                    <div class="like">
+                        <i class="fa-solid fa-hands-clapping"></i>
+                        <span>356</span>
+                    </div>
+                    <div class="comment">
+                        <i class="fa-regular fa-comments"></i>
+                        <span>356</span>
+                    </div>
+                </div>
+
+                <div class="share-listein">
+                    <div class="listein">
+                        <i class="fa-regular fa-circle-play"></i>
+                    </div>
+                    <div class="share">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="user-blog">
+                <div class="blogImage">
+                    <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*Z0rj5CWem6LK7f6p-mIGCA.png"
+                        alt="">
+                </div>
+                <div class="blog-content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae minima nostrum molestias
+                        corrupti eveniet ea mollitia nobis expedita accusamus blanditiis atque nemo non soluta quidem
+                        fugit, excepturi adipisci aperiam corporis asperiores enim cumque maxime dolor! Enim quae ipsa,
+                        dolorem voluptas cupiditate amet suscipit sit numquam at earum hic odio et soluta tenetur
+                        doloremque eligendi. Blanditiis aliquam quo necessitatibus aspernatur debitis atque maiores
+                        consectetur recusandae sit minus animi natus corrupti placeat asperiores, quaerat delectus ut
+                        tenetur nemo quae dolore. Praesentium consectetur a optio veniam tempore inventore voluptatum
+                        perspiciatis quo modi consequatur autem consequuntur eaque aperiam possimus illo, ad itaque
+                        totam? Esse!</p>
+                </div>
+            </div>
+
+        </div> -->
+    </div>
+</body>
+
+</html>
+<script type="module" src="../scripts/index.js"></script>
+<script type="module" src="../scripts/dashboard.js"></script>
+<script type="module" src="../scripts/logout.js"></script>
+<script type="module" src="../scripts/blog.js"></script>

@@ -1,14 +1,14 @@
-const mongoose = required("mongoose");
+const mongoose = require("mongoose");
 
 const commentSchema = mongoose.Schema(
   {
     blog_id: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "blog",
     },
     blog_author: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "blog",
     },
@@ -17,20 +17,21 @@ const commentSchema = mongoose.Schema(
       required: true,
     },
     children: {
-      type: [Schema.Types.ObjectId],
-      ref: "comments",
+      type: [ mongoose.Schema.Types.ObjectId],
+      ref: "comment",
     },
     commented_by: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       require: true,
       ref: "user",
     },
     isReply: {
       type: Boolean,
+      default:false
     },
     parent: {
-      type: Schema.Types.ObjectId,
-      ref: "comments",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comment",
     },
   },
   {

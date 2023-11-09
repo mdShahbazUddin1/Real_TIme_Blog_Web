@@ -36,7 +36,7 @@ const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const blog = await BlogModel.findById(id);
+    const blog = await BlogModel.findById(id).populate("author");
 
     if (!blog) {
       return res.status(400).send({ msg: "Blog not found" });

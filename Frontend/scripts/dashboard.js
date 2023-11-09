@@ -23,6 +23,9 @@ const facebooklink = document.getElementById("facebook");
 const githublink = document.getElementById("github");
 const websitelink = document.getElementById("website");
 const loader = document.getElementById("loader");
+
+const notiDiv = document.getElementById("noti-text");
+const notiDivUpdate = document.getElementById("noti-update");
 // -----------------------------------
 const BASEURL = `http://localhost:8080`;
 //------------------------------------
@@ -176,9 +179,6 @@ const displayBlog = async (data) => {
   });
 };
 
-
-
-
 const getAuthor = async () => {
   try {
     const response = await fetch(`${BASEURL}/blog/author`, {
@@ -243,6 +243,7 @@ async function appendNotificationToUI(notifications) {
     }
 
     if (notification.seen === false) {
+      notiDivUpdate.textContent = "New Notifications";
       notificationItem.style.listStyle = "outside";
     }
 
@@ -263,7 +264,6 @@ function formatDate(date) {
 
 async function getNotifi() {
   try {
-    loader.style.display = "block"
     const response = await fetch(`${BASEURL}/noti/getnotification`, {
       method: "GET",
       headers: {
@@ -272,11 +272,11 @@ async function getNotifi() {
     });
 
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      appendNotificationToUI(data);
+        const data = await response.json();
+        appendNotificationToUI(data);
+      
     } else {
-      console.error("Failed to fetch notifications");
+       notiDivUpdate.textContent = "No Notifications";
     }
   } catch (error) {
     console.error(error);
@@ -371,8 +371,6 @@ imageInput.addEventListener("change", (event) => {
   }
 });
 
-
-
 function saveToLocalStorage() {
   const title = titleParagraph.textContent;
   const banner = previewImage.src;
@@ -432,9 +430,9 @@ bioText.addEventListener("input", updateCharCount);
 const fileInput = document.getElementById("fileInput");
 const userImg = document.querySelector(".user-img img");
 // edit
-const userFullname = document.getElementById("fullname")
-const userEmail = document.getElementById("usergmail")
-const userName = document.getElementById("username")
+const userFullname = document.getElementById("fullname");
+const userEmail = document.getElementById("usergmail");
+const userName = document.getElementById("username");
 
 // Add an event listener to the file input
 fileInput.addEventListener("change", function () {
@@ -444,9 +442,6 @@ fileInput.addEventListener("change", function () {
     userImg.src = imageUrl;
   }
 });
-
-
-
 
 const fecthSaveDraft = async () => {
   try {
@@ -546,7 +541,7 @@ saveAsDraftBtn.addEventListener("click", async (e) => {
       });
 
       const data = await response.json();
-      fecthSaveDraft()
+      fecthSaveDraft();
       alert("draft saved");
     } else {
       alert("Please select an image before saving.");
@@ -556,18 +551,18 @@ saveAsDraftBtn.addEventListener("click", async (e) => {
   }
 });
 
+const profileUpdateBtn = document
+  .getElementById("update")
+  .addEventListener("click", (e) => {
+    e.preventDefault();
+    updateProfile();
+  });
 
-
-const profileUpdateBtn = document.getElementById("update").addEventListener("click",(e)=>{
-  e.preventDefault()
-  updateProfile()
-})
-
-const updateProfile = async()=>{
-  const username = userName.innerText
+const updateProfile = async () => {
+  const username = userName.innerText;
 
   const userImage = fileInput.files[0];
-  const userProfileUpdate = new FormData()
+  const userProfileUpdate = new FormData();
   userProfileUpdate.append("username", username);
   userProfileUpdate.append("bio", bioText.innerText);
   userProfileUpdate.append("youtube", youtubelink.innerText);
@@ -581,32 +576,24 @@ const updateProfile = async()=>{
     userProfileUpdate.append("image", userImage);
   }
   try {
-    const response = await fetch(`${BASEURL}/blog/editprofile`,{
-      method:"PUT",
-      headers:{
-        Authorization:localStorage.getItem("token")
+    const response = await fetch(`${BASEURL}/blog/editprofile`, {
+      method: "PUT",
+      headers: {
+        Authorization: localStorage.getItem("token"),
       },
-      body:userProfileUpdate
+      body: userProfileUpdate,
     });
 
- if (response.ok) {
-  fethcDisplay()
-   console.log("Profile update")
- } else {
-   console.log("something went wrong")
- }
+    if (response.ok) {
+      fethcDisplay();
+      console.log("Profile update");
+    } else {
+      console.log("something went wrong");
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-
-getNotifi()
+getNotifi();
 setInterval(getNotifi, 20000);
-
-
-
-
-
-
-
