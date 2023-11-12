@@ -2,15 +2,15 @@ let BASEURL = `http://localhost:8080`;
 
 const mainContainer = document.querySelector(".blog-main");
 const mainProfile = document.getElementById("main-profile");
- const nofiDiv = document.querySelector(".notification");
- const profileDiv = document.querySelector(".profile");
- const signinDiv = document.querySelector(".signin");
- const signupDiv = document.querySelector(".signup");
- const rightNavDiv = document.querySelector(".rightNav");
- const loader = document.querySelector(".loader");
+const nofiDiv = document.querySelector(".notification");
+const profileDiv = document.querySelector(".profile");
+const signinDiv = document.querySelector(".signin");
+const signupDiv = document.querySelector(".signup");
+const rightNavDiv = document.querySelector(".rightNav");
+const loader = document.querySelector(".loader");
 
- // Check if the user is logged in
- const loggedIn = localStorage.getItem("loggedIn");
+// Check if the user is logged in
+const loggedIn = localStorage.getItem("loggedIn");
 
 document.addEventListener("DOMContentLoaded", async function () {
   const loggedIn = await isLoggedIn(); // Check the login status
@@ -45,17 +45,26 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
-
 async function display(data) {
   mainContainer.innerHTML = null;
 
   let blogSection = document.createElement("div");
   blogSection.setAttribute("class", "blog-section");
+
+  // Call leftFunction
+  const li = await leftFunction(data, blogSection);
+
+  // Call rightFunction
+  rightFunction(data, blogSection, li);
+  mainContainer.append(blogSection);
+}
+
+async function leftFunction(data, blogSection, isFirstLoad = true) {
   let leftBlog = document.createElement("div");
   leftBlog.setAttribute("class", "left-blog-details");
   let ul = document.createElement("ul");
   let li = document.createElement("li");
-  li.innerHTML = "Home";
+  li.textContent = "Home";
   let loadMore = document.createElement("div");
   loadMore.setAttribute("class", "load-more");
   let loadMorebtn = document.createElement("button");
@@ -63,65 +72,6 @@ async function display(data) {
   ul.append(li);
   loadMore.append(loadMorebtn);
   leftBlog.append(ul);
-
-  let rightblog = document.createElement("div");
-  rightblog.setAttribute("class", "right-blog-details");
-  let rightfilter = document.createElement("div");
-  rightfilter.setAttribute("class", "post-filter");
-  let rightfilterText = document.createElement("h2");
-  rightfilterText.innerText = `Stories From All Interest`;
-  let rightfilterOptions = document.createElement("div");
-  rightfilterOptions.setAttribute("class", "filter-options");
-  let filter = [
-    "Programming",
-    "Hollywood",
-    "Travel",
-    "Food",
-    "Film Making",
-    "Cooking",
-    "Social Media",
-    "Technology",
-    "Social Media",
-    "Finance",
-  ];
-  filter.forEach((item) => {
-    const button = document.createElement("button");
-    button.textContent = item;
-    rightfilterOptions.appendChild(button);
-
-    button.addEventListener("click", () => {
-      if (button.classList.contains("selected")) {
-        // If already selected, deselect it and set li text to "Home"
-        button.classList.remove("selected");
-        li.innerHTML = "Home";
-      } else {
-        // Deselect any other selected button
-        document
-          .querySelectorAll(".filter-options button.selected")
-          .forEach((btn) => {
-            btn.classList.remove("selected");
-          });
-
-        // Select the button and update li text
-        button.classList.add("selected");
-        li.innerHTML = item;
-      }
-    });
-  });
-
-  const trendingDiv = document.createElement("div");
-  trendingDiv.setAttribute("class", "trending");
-  const trendingDivIcon = document.createElement("div");
-  const trendingDivText = document.createElement("span");
-  trendingDivText.innerText = `Trending`;
-  const trendingIcon = document.createElement("i");
-  trendingIcon.setAttribute("class", "fa-solid fa-arrow-trend-up");
-
-  trendingDivIcon.append(trendingDivText, trendingIcon);
-  trendingDiv.append(trendingDivIcon);
-  rightfilter.append(rightfilterText, rightfilterOptions);
-  rightblog.append(rightfilter, trendingDiv);
-  fetchBlog();
   data.forEach((blog, index) => {
     if (
       blog.author &&
@@ -191,7 +141,7 @@ async function display(data) {
     }
 
     heartIcon.addEventListener("click", async () => {
-      if (heartIcon.style.color !== "red") {
+      if (!heartIcon.classList.contains("liked")) {
         try {
           const response = await fetch(`${BASEURL}/like/likeblog/${blog._id}`, {
             method: "POST",
@@ -200,13 +150,14 @@ async function display(data) {
               Authorization: localStorage.getItem("token"),
             },
           });
+
           if (response.ok) {
-            heartIcon.style.color = "red";
+            heartIcon.classList.add("liked"); // Add the 'liked' class to change the color
             likeCount.textContent = parseInt(likeCount.textContent) + 1;
 
             // Call fetchBlog to refresh the blog data
             fetchBlog();
-            loader.style.display = "none"
+            loader.style.display = "none";
           } else if (response.status === 400) {
             console.log("Blog is already liked");
           } else {
@@ -239,12 +190,95 @@ async function display(data) {
     userBlog.append(userCard);
     leftBlog.append(userBlog, blogDetails, catergory, loadMore);
   });
+  if (isFirstLoad) {
+    blogSection.append(leftBlog);
+  } else {
+    // If not the first load, update the existing content
+    const existingLeftBlog = blogSection.querySelector(".left-blog-details");
+    existingLeftBlog.replaceWith(leftBlog);
+  }
+  return li;
+}
+
+async function rightFunction(data, blogSection, li) {
+  let rightblog = document.createElement("div");
+  rightblog.setAttribute("class", "right-blog-details");
+  let rightfilter = document.createElement("div");
+  rightfilter.setAttribute("class", "post-filter");
+  let rightfilterText = document.createElement("h2");
+  rightfilterText.innerText = `Stories From All Interest`;
+  let rightfilterOptions = document.createElement("div");
+  rightfilterOptions.setAttribute("class", "filter-options");
+  let filter = [
+    "Programming",
+    "Hollywood",
+    "Travel",
+    "Food",
+    "Film Making",
+    "Cooking",
+    "Social Media",
+    "Technology",
+    "Social Media",
+    "Finance",
+  ];
+
+  filter.forEach((item) => {
+    const button = document.createElement("button");
+    button.textContent = item;
+    rightfilterOptions.appendChild(button);
+
+    button.addEventListener("click", () => {
+      const filterTag = item.toLowerCase();
+
+      if (button.classList.contains("selected")) {
+        // If already selected, deselect it and set li text to "Home"
+        button.classList.remove("selected");
+        li.textContent = "Home";
+        // Display all blogs when the "Home" button is selected
+        display(data);
+      } else {
+        // Deselect any other selected button
+        document
+          .querySelectorAll(".filter-options button.selected")
+          .forEach((btn) => {
+            btn.classList.remove("selected");
+          });
+
+        // Select the button and update li text
+        button.classList.add("selected");
+
+        li.textContent = item;
+
+        // Filter blogs based on the selected tag
+        const filteredBlogs = data.filter((blog) =>
+          blog.tags.map((tag) => tag.toLowerCase()).includes(filterTag)
+        );
+        if (filteredBlogs.length > 0) {
+          leftFunction(filteredBlogs, blogSection, false);
+        }
+      }
+    });
+  });
+
+  const trendingDiv = document.createElement("div");
+  trendingDiv.setAttribute("class", "trending");
+  const trendingDivIcon = document.createElement("div");
+  const trendingDivText = document.createElement("span");
+  trendingDivText.innerText = `Trending`;
+  const trendingIcon = document.createElement("i");
+  trendingIcon.setAttribute("class", "fa-solid fa-arrow-trend-up");
+
+  trendingDivIcon.append(trendingDivText, trendingIcon);
+  trendingDiv.append(trendingDivIcon);
+  rightfilter.append(rightfilterText, rightfilterOptions);
+  rightblog.append(rightfilter, trendingDiv);
 
   // Sort the data array by likes in descending order
+
   data.sort((a, b) => b.activity.total_likes - a.activity.total_likes);
 
   // Create the top 5 HTML structures for the most liked blogs
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < data.length; i++) {
     const blogLike = data[i];
 
     const topTrending = document.createElement("div");
@@ -293,21 +327,23 @@ async function display(data) {
     topBlogTitle.append(topBlogText);
     rightblog.append(topTrending);
   }
-
-  blogSection.append(leftBlog, rightblog);
-  mainContainer.append(blogSection);
+  blogSection.append(rightblog);
 }
-
 // Fetch and display the blog dataURL
 
 const fetchBlog = async () => {
   loader.style.display = "block";
   try {
-    const response = await fetch(`${BASEURL}/blog/getallblog`);
+    const response = await fetch(`${BASEURL}/blog/getallblog`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
     const data = await response.json();
     display(data);
     loader.style.display = "none";
-    // console.log(data);z
+    console.log(data);
   } catch (error) {
     console.error(error);
   }
@@ -337,7 +373,6 @@ async function getNotifications() {
     console.error(error);
   }
 }
-
 
 // // Function to hide the notification when the user clicks on it
 async function hideNotification() {
@@ -370,6 +405,22 @@ async function markSeen() {
     console.log(data);
   }
 }
+
+const searchBtn = document.getElementById("search-input");
+
+searchBtn.addEventListener("keyup", (e) => {
+  const query = e.target.value;
+  if (e.key === "Enter") {
+    const query = e.target.value.trim(); // Trim to remove leading/trailing whitespaces
+
+    if (query !== "") {
+      // If the search query is not empty, redirect to the search page with the query
+      window.location.href = `./pages/search.html?query=${encodeURIComponent(
+        query
+      )}`;
+    }
+  }
+});
 
 getNotifications();
 setInterval(getNotifications, 20000);

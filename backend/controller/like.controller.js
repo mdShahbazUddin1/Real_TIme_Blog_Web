@@ -2,11 +2,11 @@
 
 const { BlogModel } = require("../models/Blog");
 const { NotificationModel } = require("../models/Notification");
-// Import your Notification model
+// const { updateCacheOnLike, nodeCache } = require("../config/cache");
 
 const likeBlog = async (req,res) => {
   try {
-
+ console.log("Like blog logic executing...");
     const {blogId} = req.params
     const userId = req.userId
 
@@ -33,7 +33,7 @@ const likeBlog = async (req,res) => {
     );
 
      if (!blog.likedBlogs) {
-       blog.likedBlog = [userId];
+       blog.likedBlogs = [userId];
      } else {
        blog.likedBlogs.push(userId);
      }
@@ -50,6 +50,8 @@ const likeBlog = async (req,res) => {
     });
 
     await notification.save();
+
+    // await updateCacheOnLike(BlogModel);
 
    res.status(200).send({msg:"blog liked succesfully"})
   } catch (error) {

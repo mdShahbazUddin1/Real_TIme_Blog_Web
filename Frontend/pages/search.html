@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/dashobard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <title>search</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navItem">
+            <div class="leftnav">
+                <div class="logo">
+                    <a href="../index.html"><img src="../assets/images/logo.png" alt="" /></a>
+                </div>
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Search" id="search-input" />
+                </div>
+            </div>
+            <div class="rightNav">
+                <div class="write-box">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <p>Write</p>
+                </div>
+                <!--  -->
+                <div class="notification">
+                    <a><i class="fa-regular fa-bell"><span id="notialert"></span></i></a>
+                </div>
+    
+                <div class="profile">
+                    <img id="main-profile" src="https://www.nicepng.com/png/full/128-1280406_user-icon-png.png">
+                    <div class="user-options">
+                        <div class="options">
+                            <div>
+                                <a href="../pages/profile.html">Profile</a>
+                            </div>
+                            <div>
+                                <a href="../pages/dashboard.html">Dashboard</a>
+                            </div>
+                            <div>
+                                <a href="../pages/setting.html">Setting</a>
+                            </div>
+                            <div class="sign-out">
+                                <p id="logout">Sign Out</p>
+                                <!-- <p>@ tanisha</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+                <div class="signin">
+                    <a href="./pages/signin.html"><button id="signin">Sign In</button></a>
+                </div>
+                <div class="signup">
+                    <a href="./pages/signup.html"><button id="signup">Sign Up</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="blog-main">
+    <!-- append here -->
+</div>
+
+</body>
+</html>
+<script src="../scripts/index.js"></script>
+<script type="module" src="../scripts/dashboard.js"></script>
+<script type="module" src="../scripts/logout.js"></script>
+<script type="module" src="../scripts/search.js"></script>

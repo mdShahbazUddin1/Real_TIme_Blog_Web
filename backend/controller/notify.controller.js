@@ -5,8 +5,7 @@ const getAuthorNotifications = async (req, res) => {
     const userId = req.userId; 
     
     const notifications = await NotificationModel.find({
-      notification_for: userId,
-      type: "like", 
+      notification_for: userId
     })
       .populate("blog")
       .populate("user");

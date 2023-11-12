@@ -2,6 +2,7 @@ const { BlogModel } = require("../models/Blog");
 const uuid = require("uuid");
 const { UserModel } = require("../models/Users");
 const { NotificationModel } = require("../models/Notification");
+// const { updateCacheOnLike, nodeCache } = require("../config/cache");
 
 const getAuthorById = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ const getAuthorById = async (req, res) => {
 
 const getAllBlog = async (req, res) => {
   try {
-    const blogs = await BlogModel.find({ draft: false }).populate("author");
+    const blogs = await BlogModel.find({draft:false}).populate("author");
 
     if (!blogs || blogs.length === 0) {
       return res.status(404).json({ message: "No published blogs found." });
@@ -76,7 +77,6 @@ const getAuthorBlog = async (req, res) => {
       "personal_info.profile_img"
     );
 
-
     if (!blog || blog.length === 0) {
       // If no blogs are found, return an empty array for blogs and author details
       return res.status(200).send({ blogs: [], author });
@@ -87,7 +87,6 @@ const getAuthorBlog = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-
 
 const createBlog = async (req, res) => {
   try {
@@ -120,6 +119,7 @@ const createBlog = async (req, res) => {
       author.account_info.total_posts += 1;
       await author.save();
     }
+    // await updateCacheOnLike(BlogModel);
 
     res.status(200).send({ msg: "Blog created" });
   } catch (error) {
@@ -171,6 +171,7 @@ const getDraftBlog = async (req, res) => {
     res.status(500).send({ msg: error.message });
   }
 };
+
 const getDraftBlogById = async (req, res) => {
   try {
     const userId = req.userId;
@@ -225,11 +226,11 @@ const updateBlog = async (req, res) => {
     blog.content = content;
 
     await blog.save();
-     const author = await UserModel.findById(authorId);
-     if (author) {
-       author.account_info.total_posts += 1;
-       await author.save();
-     }
+    const author = await UserModel.findById(authorId);
+    if (author) {
+      author.account_info.total_posts += 1;
+      await author.save();
+    }
     res.status(200).send({ msg: "blog update" });
   } catch (error) {
     res.status(500).send({ msg: error.message });
@@ -259,6 +260,7 @@ const deleteBlog = async (req, res) => {
       author.account_info.total_posts -= 1;
       await author.save();
     }
+    // await updateCacheOnLike(BlogModel)
     res.status(200).json({ msg: "Blog deleted successfully" });
   } catch (error) {
     res.status(500).send(error.message);
@@ -341,70 +343,19 @@ const editProfile = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-// blog.controller.js
 
-// const likeBlog = async (io,req, res) => {
-//   try {
-//     const { blogId } = req.params;
-//     const userId = req.userId;
+const searchBlogUser = async (req, res) => {
+  const { query } = req.query;
+  try {
+    const blogs = await BlogModel.find({
+      title: { $regex: new RegExp(query, "i") },
+    }).populate("author");
 
-//     // Check if the user has already liked the blog
-//     const isAlreadyLiked = await NotificationModel.findOne({
-//       type: "like",
-//       notification_for: blogId,
-//       user: userId,
-//     });
-
-//     if (isAlreadyLiked) {
-//       return res
-//         .status(400)
-//         .json({ message: "You have already liked this blog." });
-//     }
-
-//     // Update the blog's like count
-//     await BlogModel.updateOne(
-//       { _id: blogId },
-//       { $inc: { "activity.total_likes": 1 } }
-//     );
-
-//     // Create a new notification
-//     const notification = new NotificationModel({
-//       type: "like",
-//       blog: blogId,
-//       notification_for: blogId,
-//       user: userId,
-//     });
-
-//     await notification.save();
-//      const blog = await BlogModel.findById(blogId);
-//      if (blog) {
-//        const authorId = blog.author; // Assuming there's an author field in your BlogModel
-//        io.to(authorId).emit("blogLiked", { blogId: blog._id, userId: userId });
-
-//        // Update the blog's like count
-//        const updatedBlog = await BlogModel.findByIdAndUpdate(
-//          blogId,
-//          { $inc: { "activity.total_likes": 1 } },
-//          { new: true }
-//        );
-
-//        // Emit a real-time update to the blog's like count
-//        io.to(authorId).emit("likeCountUpdated", {
-//          blogId: updatedBlog._id,
-//          totalLikes: updatedBlog.activity.total_likes,
-//        });
-//      }
-
-//     res.status(200).json({ message: "Blog liked successfully." });
-//   } catch (error) {
-    
-//     res.status(500).send({msg : error.message})
-//     console.log("Error liking the blog:", error);
-//   }
-// };
-
-
-
+    res.status(200).send(blogs);
+  } catch (error) {
+    res.status(500).json({ error:error.message});
+  }
+};
 
 module.exports = {
   getAuthorById,
@@ -419,4 +370,5 @@ module.exports = {
   deleteBlog,
   updateDraft,
   editProfile,
+  searchBlogUser
 };

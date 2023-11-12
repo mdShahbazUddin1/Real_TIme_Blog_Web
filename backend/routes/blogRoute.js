@@ -15,7 +15,7 @@ const upload = multer({
 });
 
 blogRoute.get("/author",auth,blogController.getAuthorById)
-blogRoute.get("/getallblog",blogController.getAllBlog)
+blogRoute.get("/getallblog",auth,blogController.getAllBlog)
 blogRoute.get("/getblog/:id",auth,blogController.getBlogById);
 blogRoute.post(
   "/createblog",
@@ -45,7 +45,7 @@ blogRoute.put(
   upload.single("image"),
   blogController.editProfile
 );
-// blogRoute.post("/likeblog/:blogId", auth, blogController.likeBlog);
+blogRoute.get("/search",auth,blogController.searchBlogUser)
 
 
 

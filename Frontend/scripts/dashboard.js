@@ -50,7 +50,7 @@ const fethcDisplay = async () => {
   }
 };
 
-fethcDisplay();
+
 
 const displayBlog = async (data) => {
   const blogContainer = document.querySelector(".blog-card");
@@ -118,6 +118,7 @@ const displayBlog = async (data) => {
     dltBtn.textContent = "Delete";
 
     dltBtn.addEventListener("click", async () => {
+      
       const response = await fetch(`${BASEURL}/blog/deleteblog/${blog._id}`, {
         method: "DELETE",
         headers: {
@@ -126,7 +127,7 @@ const displayBlog = async (data) => {
       });
       const data = await response.json();
       if (response.ok) {
-        fethcDisplay();
+        fethcDisplay()
         loader.style.display = "none";
         console.log("blog deleted");
       } else {
@@ -206,7 +207,7 @@ const getAuthor = async () => {
     console.log(error);
   }
 };
-getAuthor();
+
 
 async function appendNotificationToUI(notifications) {
   const notificationList = document.getElementById("notifications-list");
@@ -216,7 +217,7 @@ async function appendNotificationToUI(notifications) {
   notifications.reverse();
 
   // Get only the latest 10 notifications
-  const latestNotifications = notifications.slice(0, 5);
+  const latestNotifications = notifications.slice(0, 20);
 
   latestNotifications.forEach((notification) => {
     const notificationItem = document.createElement("li");
@@ -227,19 +228,43 @@ async function appendNotificationToUI(notifications) {
     // Format the timestamps as 'YYYY-MM-DD HH:MM:SS'
     const formattedCreatedAt = formatDate(createdAt);
 
+    let content = "";
+
     if (notification.type === "like") {
       const username = notification.user.personal_info.username;
 
       // Check if the 'blog' object exists in the notification
       if (notification.blog && notification.blog.title) {
         const blogTitle = notification.blog.title;
-        notificationItem.textContent = `${username} liked your blog '${blogTitle}' at ${formattedCreatedAt}`;
+        content = `${username} liked your blog '${blogTitle}' at ${formattedCreatedAt}`;
       } else {
         // Handle the case where 'blog' or 'title' is missing
-        notificationItem.textContent = `${username} liked your blog (Title not available) at ${formattedCreatedAt}`;
+        content = `${username} liked your blog (Title not available) at ${formattedCreatedAt}`;
+      }
+    } else if (notification.type === "comment") {
+      const username = notification.user.personal_info.username;
+
+      // Check if the 'blog' object exists in the notification
+      if (notification.blog && notification.blog.title) {
+        const blogTitle = notification.blog.title;
+        content = `${username} commented on your blog '${blogTitle}' at ${formattedCreatedAt}`;
+      } else {
+        // Handle the case where 'blog' or 'title' is missing
+        content = `${username} commented on your blog (Title not available) at ${formattedCreatedAt}`;
+      }
+    } else if (notification.type === "reply") {
+      const username = notification.user.personal_info.username;
+
+      // Check if the 'comment' object exists in the notification
+      if (notification.comment && notification.comment.content) {
+        const commentContent = notification.comment.content;
+        content = `${username} replied to your comment '${commentContent}' at ${formattedCreatedAt}`;
+      } else {
+        // Handle the case where 'comment' or 'content' is missing
+        content = `${username} replied to your comment (Content not available) at ${formattedCreatedAt}`;
       }
     } else {
-      notificationItem.textContent = `${notification.message} at ${formattedCreatedAt}`;
+      content = `${notification.message} at ${formattedCreatedAt}`;
     }
 
     if (notification.seen === false) {
@@ -247,9 +272,11 @@ async function appendNotificationToUI(notifications) {
       notificationItem.style.listStyle = "outside";
     }
 
+    notificationItem.textContent = content;
     notificationList.appendChild(notificationItem);
   });
 }
+
 
 function formatDate(date) {
   const year = date.getFullYear();
@@ -459,7 +486,7 @@ const fecthSaveDraft = async () => {
   }
 };
 
-fecthSaveDraft();
+
 
 const displaySaveDraft = async (data) => {
   const draftContainer = document.querySelector(".draf");
@@ -595,5 +622,9 @@ const updateProfile = async () => {
   }
 };
 
+
+fethcDisplay();
+fecthSaveDraft();
+getAuthor();
 getNotifi();
 setInterval(getNotifi, 20000);

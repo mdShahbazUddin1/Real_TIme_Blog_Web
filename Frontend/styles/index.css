@@ -353,10 +353,14 @@ body {
   font-family: "Poppins";
   border-radius: 15px;
 }
-.fa-solid {
+.fa-heart {
   color: #afafaf;
   margin-right: 10px;
   cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+.fa-heart:active{
+  scale: 0.9;
 }
 .like {
   color: #555454;
