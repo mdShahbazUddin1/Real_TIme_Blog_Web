@@ -21,7 +21,7 @@ const blogSchema = mongoose.Schema(
       // required: true
     },
     content: {
-      type: [],
+      type: String,
       // required: true
     },
     tags: {
@@ -71,6 +71,11 @@ const blogSchema = mongoose.Schema(
     },
   }
 );
+
+blogSchema.index({ blog_id: 1 }, { unique: true });
+blogSchema.index({ draft: 1 });
+blogSchema.index({ author: 1 });
+blogSchema.index({ tags: 1 });
 
 const BlogModel = mongoose.model("blog", blogSchema);
 

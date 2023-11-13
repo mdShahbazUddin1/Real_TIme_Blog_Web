@@ -26,6 +26,15 @@ const loader = document.getElementById("loader");
 
 const notiDiv = document.getElementById("noti-text");
 const notiDivUpdate = document.getElementById("noti-update");
+
+const fileInput = document.getElementById("fileInput");
+const userImg = document.querySelector(".user-img img");
+// edit
+const userFullname = document.getElementById("fullname");
+const userEmail = document.getElementById("usergmail");
+const userName = document.getElementById("username");
+ const mainProfile = document.getElementById("main-pic")
+
 // -----------------------------------
 const BASEURL = `http://localhost:8080`;
 //------------------------------------
@@ -57,17 +66,6 @@ const displayBlog = async (data) => {
   blogContainer.innerHTML = ""; // Clear the existing content
 
   data.forEach((blog, index) => {
-    const mainProfileImage = document.getElementById("main-pic");
-
-    // Check if the blog has a valid user's profile image URL
-    if (
-      blog.author &&
-      blog.author.personal_info &&
-      blog.author.personal_info.profile_img
-    ) {
-      // Update the src attribute of the main-profile image with the user's profile image URL
-      mainProfileImage.src = blog.author.personal_info.profile_img;
-    }
     const cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "blog-card-container");
     const leftCard = document.createElement("div");
@@ -181,6 +179,7 @@ const displayBlog = async (data) => {
 };
 
 const getAuthor = async () => {
+  console.log("hi")
   try {
     const response = await fetch(`${BASEURL}/blog/author`, {
       method: "GET",
@@ -190,6 +189,7 @@ const getAuthor = async () => {
     });
 
     data = await response.json();
+    mainProfile.src = data.personal_info.profile_img;
     userImg.src = data.personal_info.profile_img;
     userFullname.innerText = data.personal_info.fullname;
     bioText.innerText = data.personal_info.bio;
@@ -454,12 +454,7 @@ function updateCharCount(event) {
 // Add an input event listener to the bioText element
 bioText.addEventListener("input", updateCharCount);
 
-const fileInput = document.getElementById("fileInput");
-const userImg = document.querySelector(".user-img img");
-// edit
-const userFullname = document.getElementById("fullname");
-const userEmail = document.getElementById("usergmail");
-const userName = document.getElementById("username");
+
 
 // Add an event listener to the file input
 fileInput.addEventListener("change", function () {
@@ -612,7 +607,7 @@ const updateProfile = async () => {
     });
 
     if (response.ok) {
-      fethcDisplay();
+     getAuthor()
       console.log("Profile update");
     } else {
       console.log("something went wrong");

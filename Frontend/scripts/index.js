@@ -73,18 +73,6 @@ async function leftFunction(data, blogSection, isFirstLoad = true) {
   loadMore.append(loadMorebtn);
   leftBlog.append(ul);
   data.forEach((blog, index) => {
-    if (
-      blog.author &&
-      blog.author.personal_info &&
-      blog.author.personal_info.profile_img
-    ) {
-      mainProfile.src = blog.author.personal_info.profile_img;
-    } else {
-      console.error(
-        "Author or personal_info data, or profile_img is missing in the response"
-      );
-    }
-
     let userBlog = document.createElement("div");
     userBlog.setAttribute("class", "user-blog-info");
     let userCard = document.createElement("div");
@@ -341,70 +329,20 @@ const fetchBlog = async () => {
       },
     });
     const data = await response.json();
+    console.log(data);
     display(data);
     loader.style.display = "none";
-    console.log(data);
+    
   } catch (error) {
     console.error(error);
   }
 };
 fetchBlog();
 
-async function getNotifications() {
-  try {
-    const response = await fetch(`${BASEURL}/noti/getnotification`, {
-      method: "GET",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
 
-    if (response.ok) {
-      const notificationAlert = document.getElementById("notialert");
-      const data = await response.json();
 
-      if (data.filter((notification) => !notification.seen).length > 0) {
-        notificationAlert.style.visibility = "visible";
-      }
-    } else {
-      console.error("Failed to fetch notifications");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
 
-// // Function to hide the notification when the user clicks on it
-async function hideNotification() {
-  const notificationAlert = document.getElementById("notialert");
-  notificationAlert.style.visibility = "hidden";
-}
 
-// // Add an event listener to the notification span or element
-const notificationSpan = document.querySelector(".notification");
-notificationSpan.addEventListener("click", () => {
-  hideNotification();
-  markSeen();
-});
-
-async function markSeen() {
-  try {
-    const response = await fetch(`${BASEURL}/noti/markasseen`, {
-      method: "GET",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-
-    if (response.ok) {
-      console.log("Notifications marked as seen");
-    } else {
-      console.log("No new notifications found");
-    }
-  } catch (error) {
-    console.log(data);
-  }
-}
 
 const searchBtn = document.getElementById("search-input");
 
@@ -422,5 +360,4 @@ searchBtn.addEventListener("keyup", (e) => {
   }
 });
 
-getNotifications();
-setInterval(getNotifications, 20000);
+

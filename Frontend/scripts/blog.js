@@ -166,7 +166,26 @@ const displayBlog = async (data) => {
 
     // Create p element for blog content
     const blogContentP = document.createElement("p");
-    blogContentP.textContent = data.content[0];
+    blogContentP.textContent = data.content;
+
+    listenIcon.addEventListener("click", () => {
+      const contentToRead = data.content.join(" ");
+      blogContent.innerHTML = ""; // Clear existing content
+      blogContent.appendChild(blogContentP);
+
+      // Read out loud
+      readOutLoud(contentToRead);
+    });
+
+    function readOutLoud(text) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.text = text;
+      speech.volume = 1;
+      speech.rate = 1;
+      speech.pitch = 1;
+
+      window.speechSynthesis.speak(speech);
+    }
 
     // Append blog content to blogContent
     blogContent.appendChild(blogContentP);
@@ -180,7 +199,6 @@ const displayBlog = async (data) => {
     blogSections.appendChild(shareDetails);
     blogSections.appendChild(userBlog);
     mainBlogContainer.append(blogSections);
-  
   } catch (error) {
     console.log(error);
   }
@@ -215,8 +233,8 @@ async function createComment(data) {
     });
     if (response.ok) {
       const data = await response.json();
-      getAllComment()
-      getBlogById()
+      getAllComment();
+      getBlogById();
       console.log(data);
     }
   } catch (error) {
@@ -232,7 +250,6 @@ commentBtn.addEventListener("click", (e) => {
     comment: commentValue,
   };
   createComment(userComment);
-
 });
 
 const displayBlogComment = async (data, authorId, blogId) => {
@@ -249,20 +266,13 @@ const displayBlogComment = async (data, authorId, blogId) => {
         // Toggle the display of the "Leave reply" section
         leaveReplySection.style.display =
           leaveReplySection.style.display === "none" ? "block" : "none";
-
       }
     });
-    commentContainer.innerHTML = null;
 
     const blogComments = data.filter((comment) => comment.blog_id === blogId);
-const profileImage = document.getElementById("main-profile");
-    blogComments.forEach(async (comment, index) => {
-      if (authorId === comment.commented_by._id) {
-        userImage.src = comment.commented_by.personal_info.profile_img;
-        userFullname.textContent = `${comment.commented_by.personal_info.fullname}@${comment.commented_by.personal_info.username}`;
-        profileImage.src = comment.commented_by.personal_info.profile_img;
-      }
 
+    commentContainer.innerHTML = null;
+    blogComments.forEach(async (comment, index) => {
       const commentcard = document.createElement("div");
       commentcard.setAttribute("class", "comment-card");
       const commentdiv = document.createElement("div");
@@ -359,8 +369,8 @@ const profileImage = document.getElementById("main-profile");
 
       async function renderReplies(replies) {
         if (Array.isArray(replies) && replies.length > 0) {
-          replyCount.textContent = `${replies.length} replies`
-          allRepliesDiv.style.display = "block"
+          replyCount.textContent = `${replies.length} replies`;
+          allRepliesDiv.style.display = "block";
           allRepliesDiv.innerHTML = null;
           replies.forEach((reply) => {
             const replyuserDetailsCont = document.createElement("div");
@@ -378,7 +388,7 @@ const profileImage = document.getElementById("main-profile");
             replyuserDetailsCont.append(replyuserDetails, replyUserReplyText);
             allRepliesDiv.append(replyuserDetailsCont);
           });
-        }else{
+        } else {
           allRepliesDiv.style.display = "none";
         }
       }
@@ -414,8 +424,11 @@ async function getAllComment() {
       },
     });
     const data = await response.json();
-    displayBlogComment(data.comments, data.authorId, blogId);
-    // console.log(data.comments);
+    const sortedComments = data.comments.sort(
+      (a, b) => new Date(b.commentedAt) - new Date(a.commentedAt)
+    );
+    displayBlogComment(sortedComments, data.authorId, blogId);
+    // console.log(sortedComments);
   } catch (error) {
     console.log(error);
   }
