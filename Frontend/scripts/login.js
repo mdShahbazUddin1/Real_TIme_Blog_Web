@@ -4,7 +4,7 @@ const loginWithGoogle = document.getElementById("googleLogin");
 const password = document.getElementById("password1");
 import {
   getAuth,
-  signInWithPopup,
+  signInWithPopup
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
 import { firebaseApp, googleAuthProvider } from "./firebase.js"; // Import your Firebase setup
 const nofiDiv = document.querySelector(".notification");
@@ -90,7 +90,7 @@ loginWithGoogle.addEventListener("click", async () => {
     const auth = getAuth(firebaseApp); // Initialize the auth service
 
     // Configure GoogleAuthProvider with the prompt option
-    const googleAuthProvider = new GoogleAuthProvider();
+    const googleAuthProvider = new googleAuthProvider();
     googleAuthProvider.setCustomParameters({
       prompt: "select_account",
     });
