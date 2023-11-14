@@ -13,7 +13,7 @@ const signinDiv = document.querySelector(".signin");
 const signupDiv = document.querySelector(".signup");
 const rightNavDiv = document.querySelector(".rightNav");
 
-const BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 
 iziToast.settings({
   position: "topCenter", // Display notifications at the top center
@@ -85,8 +85,6 @@ const loginUser = async () => {
   }
 };
 
-
-
 loginWithGoogle.addEventListener("click", async () => {
   try {
     const auth = getAuth(firebaseApp); // Initialize the auth service
@@ -103,8 +101,8 @@ loginWithGoogle.addEventListener("click", async () => {
       },
       body: JSON.stringify({ access_token }),
     });
-    const data = await response.json()
-  
+    const data = await response.json();
+
     // Handle the response from your API here
     if (response.status === 200) {
       (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");

@@ -6,7 +6,6 @@ const { NotificationModel } = require("../models/Notification");
 
 const likeBlog = async (req,res) => {
   try {
- console.log("Like blog logic executing...");
     const {blogId} = req.params
     const userId = req.userId
 

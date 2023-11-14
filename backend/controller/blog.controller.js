@@ -1,8 +1,17 @@
 const { BlogModel } = require("../models/Blog");
 const uuid = require("uuid");
+require("dotenv").config()
 const { UserModel } = require("../models/Users");
 const { NotificationModel } = require("../models/Notification");
-// const { updateCacheOnLike, nodeCache } = require("../config/cache");
+const AWS = require("aws-sdk");
+
+AWS.config.update({
+  accessKeyId: process.env.AWSACCESSKEYID,
+  secretAccessKey: process.env.AWSSECRETKEY,
+  region: process.env.AWSREGION,
+});
+
+const s3 = new AWS.S3();
 
 const getAuthorById = async (req, res) => {
   try {
@@ -89,23 +98,31 @@ const getAuthorBlog = async (req, res) => {
 };
 
 const createBlog = async (req, res) => {
+    
   try {
     const authorId = req.userId;
     const { title, des, content, tags } = req.body;
 
-    let imageDataURL = null;
+    let imageS3URL = null;
     if (req.file) {
       const imageBuffer = req.file.buffer;
-      const imageBase64 = imageBuffer.toString("base64");
-      imageDataURL = `data:${req.file.mimetype};base64,${imageBase64}`;
+      const params = {
+        Bucket: "blog-website-s3",
+        Key: `images/${uuid.v4()}-${req.file.originalname}`,
+        Body: imageBuffer,
+        ContentType: req.file.mimetype,
+      };
+
+      const uploadedImage = await s3.upload(params).promise();
+      imageS3URL = uploadedImage.Location;
     }
 
-    const uniqueBlogId = uuid.v4(); // Generate a new unique blog_id
+    const uniqueBlogId = uuid.v4();
 
     const newBlog = await BlogModel.create({
       blog_id: uniqueBlogId,
       title,
-      banner: imageDataURL,
+      banner: imageS3URL,
       des,
       content,
       tags,
@@ -119,10 +136,10 @@ const createBlog = async (req, res) => {
       author.account_info.total_posts += 1;
       await author.save();
     }
-    // await updateCacheOnLike(BlogModel);
 
     res.status(200).send({ msg: "Blog created" });
   } catch (error) {
+    console.error(error);
     res.status(500).send({ msg: error.message });
   }
 };
@@ -132,23 +149,37 @@ const saveToDraft = async (req, res) => {
     const userId = req.userId;
     const { title, des, content, tags } = req.body;
 
-    let imageDataURL = null;
-    if (req.file) {
-      const imageBuffer = req.file.buffer;
-      const imageBase64 = imageBuffer.toString("base64");
-      imageDataURL = `data:${req.file.mimetype};base64,${imageBase64}`;
+    // Ensure that required fields are provided in the request
+    if (!title || !content) {
+      return res
+        .status(400)
+        .send({ msg: "Missing required fields in the request" });
     }
 
-    const uniqueBlogId = uuid.v4(); // Generate a new unique blog_id
+    let imageS3URL = null;
+    if (req.file) {
+      const imageBuffer = req.file.buffer;
+      const params = {
+        Bucket: "blog-website-s3",
+        Key: `images/${uuid.v4()}-${req.file.originalname}`,
+        Body: imageBuffer,
+        ContentType: req.file.mimetype,
+      };
+
+      const uploadedImage = await s3.upload(params).promise();
+      imageS3URL = uploadedImage.Location;
+    }
+
+    const uniqueBlogId = uuid.v4();
 
     const newBlog = await BlogModel.create({
       blog_id: uniqueBlogId,
-      title: title, // Make sure 'title' is provided in the request
-      banner: imageDataURL,
-      des: des, // Make sure 'des' is provided in the request
-      content: content, // Make sure 'content' is provided in the request
-      tags: tags, // Make sure 'tags' is provided in the request
-      author: userId, // Make sure 'userId' is provided in the request
+      title: title,
+      banner: imageS3URL,
+      des: des,
+      content: content,
+      tags: tags,
+      author: userId,
       draft: true,
     });
 
@@ -158,6 +189,7 @@ const saveToDraft = async (req, res) => {
     res.status(500).send({ msg: error.message });
   }
 };
+
 
 const getDraftBlog = async (req, res) => {
   try {

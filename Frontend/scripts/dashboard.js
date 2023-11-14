@@ -36,7 +36,7 @@ const userName = document.getElementById("username");
  const mainProfile = document.getElementById("main-pic")
 
 // -----------------------------------
-const BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 //------------------------------------
 
 let data = null;
@@ -476,6 +476,7 @@ const fecthSaveDraft = async () => {
 
     const data = await response.json();
     displaySaveDraft(data);
+    console.log(data)
   } catch (error) {
     console.log(error);
   }
@@ -564,7 +565,7 @@ saveAsDraftBtn.addEventListener("click", async (e) => {
 
       const data = await response.json();
       fecthSaveDraft();
-      alert("draft saved");
+
     } else {
       alert("Please select an image before saving.");
     }

@@ -8,7 +8,7 @@ const commentInput = document.querySelector(".write-thought");
 const commentBtn = document.getElementById("res-btn");
 
 //  ------------------------------------------
-const BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 // ----------------------------------------------
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -91,7 +91,36 @@ const displayBlog = async (data) => {
     const likeDiv = document.createElement("div");
     const likeIcon = document.createElement("i");
     likeIcon.setAttribute("class", "fa-solid fa-hands-clapping");
+    if (data.likedBlogs.includes(data.author._id)) {
+      likeIcon.style.color = "red";
+    }
 
+    likeIcon.addEventListener("click", async () => {
+      if (!likeIcon.classList.contains("liked")) {
+        try {
+          const response = await fetch(`${BASEURL}/like/likeblog/${data._id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          });
+
+          if (response.ok) {
+            likeIcon.classList.add("liked");
+            likeIcon.style.color = "red";
+            getBlogById();
+            loader.style.display = "none";
+          } else if (response.status === 400) {
+            console.log("Blog is already liked");
+          } else {
+            console.log("Failed to like the blog");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
     // Create span for like count
     const likeCountSpan = document.createElement("span");
     likeCountSpan.textContent = data.activity.total_likes;
@@ -130,6 +159,25 @@ const displayBlog = async (data) => {
     const shareDiv = document.createElement("div");
     const shareIcon = document.createElement("i");
     shareIcon.classList.add("fa-solid", "fa-share-nodes");
+    shareIcon.addEventListener("click", async () => {
+      try {
+        if (navigator.share) {
+          // Use the Web Share API
+          await navigator.share({
+            title: "Share Blog",
+            text: "Check out this blog!",
+            url: window.location.href, // Use the URL of your blog
+          });
+        } else {
+          // Fallback for browsers that don't support the Web Share API
+          console.log(
+            "Web Share API not supported. Implement your own sharing logic."
+          );
+        }
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    });
     // shareListen.style.border = "1px solid black";
     shareListen.style.width = "10%";
     shareListen.style.display = "flex";
@@ -168,13 +216,27 @@ const displayBlog = async (data) => {
     const blogContentP = document.createElement("p");
     blogContentP.textContent = data.content;
 
+    let isSpeaking = false;
+    let currentUtterance;
+
     listenIcon.addEventListener("click", () => {
-      const contentToRead = data.content.join(" ");
+      const contentToRead = data.content;
       blogContent.innerHTML = ""; // Clear existing content
       blogContent.appendChild(blogContentP);
 
-      // Read out loud
-      readOutLoud(contentToRead);
+      if (isSpeaking) {
+        // Pause if currently speaking
+        window.speechSynthesis.pause();
+        isSpeaking = false;
+      } else {
+        // Start reading from the beginning or resume if paused
+        if (currentUtterance) {
+          window.speechSynthesis.resume();
+        } else {
+          currentUtterance = readOutLoud(contentToRead);
+        }
+        isSpeaking = true;
+      }
     });
 
     function readOutLoud(text) {
@@ -184,7 +246,15 @@ const displayBlog = async (data) => {
       speech.rate = 1;
       speech.pitch = 1;
 
+      speech.onend = () => {
+        // Speech has finished, reset the current utterance
+        currentUtterance = null;
+        isSpeaking = false;
+      };
+
       window.speechSynthesis.speak(speech);
+
+      return speech;
     }
 
     // Append blog content to blogContent

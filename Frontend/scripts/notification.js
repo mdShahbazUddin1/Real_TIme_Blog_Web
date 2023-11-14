@@ -1,5 +1,5 @@
 
-let BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 
 async function getNotifications() {
   // console.log("getNotifications function called");

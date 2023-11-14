@@ -1,4 +1,4 @@
-let BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 const mainProfile = document.getElementById("main-pic");
 const userImage = document.querySelector(".main-image");
 const userFullname = document.querySelector(".comment-username");

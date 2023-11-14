@@ -1,4 +1,4 @@
-let BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 
 const mainContainer = document.querySelector(".blog-main");
 const mainProfile = document.getElementById("main-profile");
@@ -140,10 +140,8 @@ async function leftFunction(data, blogSection, isFirstLoad = true) {
           });
 
           if (response.ok) {
-            heartIcon.classList.add("liked"); // Add the 'liked' class to change the color
-            likeCount.textContent = parseInt(likeCount.textContent) + 1;
-
-            // Call fetchBlog to refresh the blog data
+            heartIcon.classList.add("liked");
+            heartIcon.style.color = "red";
             fetchBlog();
             loader.style.display = "none";
           } else if (response.status === 400) {
@@ -156,8 +154,6 @@ async function leftFunction(data, blogSection, isFirstLoad = true) {
         }
       }
     });
-
-    // Append catergoryHeart and heartIcon to your document
 
     const likeCount = document.createElement("span");
     likeCount.classList.add("like");
@@ -329,35 +325,29 @@ const fetchBlog = async () => {
       },
     });
     const data = await response.json();
-    console.log(data);
     display(data);
     loader.style.display = "none";
-    
   } catch (error) {
     console.error(error);
   }
 };
 fetchBlog();
 
-
-
-
-
-
 const searchBtn = document.getElementById("search-input");
 
 searchBtn.addEventListener("keyup", (e) => {
-  const query = e.target.value;
-  if (e.key === "Enter") {
-    const query = e.target.value.trim(); // Trim to remove leading/trailing whitespaces
+  const query = e.target.value.trim(); // Trim to remove leading/trailing whitespaces
 
-    if (query !== "") {
-      // If the search query is not empty, redirect to the search page with the query
-      window.location.href = `./pages/search.html?query=${encodeURIComponent(
-        query
-      )}`;
-    }
+  if (e.key === "Enter" && query !== "") {
+    // Check the current path
+    const currentPath = window.location.pathname;
+
+    // Construct the search page URL based on the current path
+    const searchPageURL = currentPath.includes("/pages/")
+      ? `../pages/search.html?query=${encodeURIComponent(query)}`
+      : `./pages/search.html?query=${encodeURIComponent(query)}`;
+
+    // Redirect to the constructed URL
+    window.location.href = searchPageURL;
   }
 });
-
-

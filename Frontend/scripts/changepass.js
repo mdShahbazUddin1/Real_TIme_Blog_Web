@@ -1,7 +1,7 @@
 const passForm = document.getElementById("change-form");
 const currPass = document.getElementById("curr");
 const newPass = document.getElementById("new");
-const BASEURL = `http://localhost:8080`;
+const BASEURL = `https://real-time-bm7c.onrender.com`;
 
 // Regular expression to enforce password pattern
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;

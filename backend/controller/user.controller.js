@@ -15,7 +15,7 @@ admin.initializeApp({
 });
 
 const formatData = (user) => {
-  const token = jwt.sign({ userId: user._id }, process.env.SECRET_ACCESS_KEY);
+  const token = jwt.sign({ userId: user._id }, process.env.SECRET_ACCESS_KEY,{expiresIn:"1h"});
 
   return {
     profile_img: user.personal_info.profile_img,
@@ -163,7 +163,7 @@ const googleAuth = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const { currentPass, newPass } = req.body;
-    const authorId = req.userId; // Assuming you have a middleware to set the userId in req
+    const authorId = req.userId; 
 
     const user = await UserModel.findOne({ _id: authorId });
 
@@ -182,9 +182,9 @@ const changePassword = async (req, res) => {
 
     const hashedNewPass = await bcrypt.hash(newPass, 10);
 
-    user.personal_info.password = hashedNewPass; // Update the password field
+    user.personal_info.password = hashedNewPass;
 
-    await user.save(); // Save the updated user document
+    await user.save(); 
 
     res.status(200).send({ message: "Password changed" });
   } catch (error) {
