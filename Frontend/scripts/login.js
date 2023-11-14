@@ -88,6 +88,13 @@ const loginUser = async () => {
 loginWithGoogle.addEventListener("click", async () => {
   try {
     const auth = getAuth(firebaseApp); // Initialize the auth service
+
+    // Configure GoogleAuthProvider with the prompt option
+    const googleAuthProvider = new GoogleAuthProvider();
+    googleAuthProvider.setCustomParameters({
+      prompt: "select_account",
+    });
+
     const result = await signInWithPopup(auth, googleAuthProvider);
     const user = result.user;
 
