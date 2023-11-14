@@ -7,7 +7,7 @@ import {
 // Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAPVm2-uk5P3aGWeP7RVGfuEFHcBssZhG8",
-  authDomain: "blog-management-804c9.firebaseapp.com",
+  authDomain: "smoothstories.vercel.app",
   projectId: "blog-management-804c9",
   storageBucket: "blog-management-804c9.appspot.com",
   messagingSenderId: "200999651469",
