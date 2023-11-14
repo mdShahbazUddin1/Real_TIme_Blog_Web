@@ -4,9 +4,9 @@ const loginWithGoogle = document.getElementById("googleLogin");
 const password = document.getElementById("password1");
 import {
   getAuth,
-  signInWithPopup
+  signInWithPopup,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
-import { firebaseApp, googleAuthProvider } from "./firebase.js"; // Import your Firebase setup
+import { firebaseApp } from "./firebase.js"; // Import your Firebase setup
 const nofiDiv = document.querySelector(".notification");
 const profileDiv = document.querySelector(".profile");
 const signinDiv = document.querySelector(".signin");
@@ -89,14 +89,9 @@ loginWithGoogle.addEventListener("click", async () => {
   try {
     const auth = getAuth(firebaseApp); // Initialize the auth service
 
-    // Configure GoogleAuthProvider with the prompt option
-    const GoogleAuthProvider = new googleAuthProvider();
-    GoogleAuthProvider.setCustomParameters({
-      prompt: "select_account",
-    });
-
     // Sign in with Google
-    const result = await signInWithPopup(auth, GoogleAuthProvider);
+    const result = await signInWithPopup(auth, new auth.GoogleAuthProvider());
+
     const user = result.user;
 
     // You can now use the 'user' object, which contains information about the authenticated user
@@ -129,9 +124,6 @@ loginWithGoogle.addEventListener("click", async () => {
     console.error("Google login error:", error);
   }
 });
-
-
-
 
 // Function to validate email
 function validateEmail(email) {
