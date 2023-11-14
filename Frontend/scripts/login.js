@@ -90,7 +90,7 @@ loginWithGoogle.addEventListener("click", async () => {
     const auth = getAuth(firebaseApp); // Initialize the auth service
 
     // Sign in with Google
-    const result = await signInWithPopup(auth, new auth.GoogleAuthProvider());
+    const result = await signInWithPopup(auth, new GoogleAuthProvider());
 
     const user = result.user;
 
@@ -124,6 +124,7 @@ loginWithGoogle.addEventListener("click", async () => {
     console.error("Google login error:", error);
   }
 });
+
 
 // Function to validate email
 function validateEmail(email) {
