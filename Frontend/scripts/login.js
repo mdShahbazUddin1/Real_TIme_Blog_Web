@@ -90,13 +90,13 @@ loginWithGoogle.addEventListener("click", async () => {
     const auth = getAuth(firebaseApp); // Initialize the auth service
 
     // Configure GoogleAuthProvider with the prompt option
-    const googleAuthProvider = new googleAuthProvider();
-    googleAuthProvider.setCustomParameters({
+    const GoogleAuthProvider = new googleAuthProvider();
+    GoogleAuthProvider.setCustomParameters({
       prompt: "select_account",
     });
 
     // Sign in with Google
-    const result = await signInWithPopup(auth, googleAuthProvider);
+    const result = await signInWithPopup(auth, GoogleAuthProvider);
     const user = result.user;
 
     // You can now use the 'user' object, which contains information about the authenticated user
