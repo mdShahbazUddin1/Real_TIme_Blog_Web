@@ -5,6 +5,7 @@ const password = document.getElementById("password1");
 import {
   getAuth,
   signInWithPopup,
+  GoogleAuthProvider,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
 import { firebaseApp, googleAuthProvider } from "./firebase.js"; // Import your Firebase setup
 const nofiDiv = document.querySelector(".notification");
