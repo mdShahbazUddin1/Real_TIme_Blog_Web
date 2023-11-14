@@ -88,12 +88,21 @@ const loginUser = async () => {
 loginWithGoogle.addEventListener("click", async () => {
   try {
     const auth = getAuth(firebaseApp); // Initialize the auth service
+
+    // Configure GoogleAuthProvider with the prompt option
+    const googleAuthProvider = new GoogleAuthProvider();
+    googleAuthProvider.setCustomParameters({
+      prompt: "select_account",
+    });
+
+    // Sign in with Google
     const result = await signInWithPopup(auth, googleAuthProvider);
     const user = result.user;
 
     // You can now use the 'user' object, which contains information about the authenticated user
-    // console.log("Google login successful. User:", user);
     const access_token = user.stsTokenManager.accessToken;
+
+    // Call your API with the access token
     const response = await fetch(`${BASEURL}/user/googleAuth`, {
       method: "POST",
       headers: {
@@ -101,10 +110,10 @@ loginWithGoogle.addEventListener("click", async () => {
       },
       body: JSON.stringify({ access_token }),
     });
-    const data = await response.json();
 
     // Handle the response from your API here
     if (response.status === 200) {
+      const data = await response.json();
       (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");
       signinDiv.style.display = "none";
       signupDiv.style.display = "none";
@@ -120,6 +129,9 @@ loginWithGoogle.addEventListener("click", async () => {
     console.error("Google login error:", error);
   }
 });
+
+
+
 
 // Function to validate email
 function validateEmail(email) {
