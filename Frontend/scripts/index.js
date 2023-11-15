@@ -141,7 +141,7 @@ async function leftFunction(data, blogSection, isFirstLoad = true) {
 
           if (response.ok) {
             heartIcon.classList.add("liked");
-            heartIcon.style.color = "red";
+            // heartIcon.style.color = "red";
             fetchBlog();
             loader.style.display = "none";
           } else if (response.status === 400) {
