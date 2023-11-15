@@ -3,9 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-html, body {
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-    overflow-y: auto;   /* Allow vertical scrolling */
+html,
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 .main-dashboard {
   position: relative;
@@ -23,7 +24,6 @@ html, body {
   margin-top: 11px;
   border-right: 1px solid #eeeeee;
   margin-left: 10px; /* Adjusted margin-left value */
- 
 }
 /* font-family: 'Gelasio', serif; */
 /* font-family: 'Poppins', sans-serif; */
@@ -96,7 +96,9 @@ html, body {
 #blog-ui,
 #notiy,
 #writeblog,
-#blog-create,#edit,#change-pass {
+#blog-create,
+#edit,
+#change-pass {
   display: none; /* Initially hide all right UI elements */
 }
 #blog-ui {
@@ -162,7 +164,7 @@ html, body {
   display: block;
   margin-top: 20px;
 }
-.blog-card-container{
+.blog-card-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -246,24 +248,23 @@ html, body {
   font-size: 11px;
 }
 
-
-.draf{
- margin-top: 15px;
+.draf {
+  margin-top: 15px;
 }
 
-.draftcard{
+.draftcard {
   display: flex;
   align-items: start;
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eeeeee;
 }
-.draft-img{
+.draft-img {
   width: 10%;
   height: 80px;
   border-radius: 5px;
 }
-.draft-img img{
+.draft-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -278,9 +279,9 @@ html, body {
 }
 .draft-small {
   font-family: sans-serif;
-    font-size: 12px;
-    color: #444;
-    margin-top: 5px;
+  font-size: 12px;
+  color: #444;
+  margin-top: 5px;
 }
 .drat-publis {
   margin-top: 6px;
@@ -292,11 +293,10 @@ html, body {
   margin-left: 20px;
 }
 
-#drftpublishbtn{
- color: #4CAF50;
- text-decoration: underline;
+#drftpublishbtn {
+  color: #4caf50;
+  text-decoration: underline;
 }
-
 
 #notiy {
   width: 80%;
@@ -339,21 +339,19 @@ html, body {
   text-align: center;
 }
 
-
-#notification-container{
- margin-top: 15px;
+#notification-container {
+  margin-top: 15px;
 }
- 
 
-#notification-container ul li{
+#notification-container ul li {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 20px;
   margin-top: 5px;
-  list-style:none;
+  list-style: none;
   border-radius: 10px;
   font-family: sans-serif;
- font-size: 14px;
- color: #444;
+  font-size: 14px;
+  color: #444;
 }
 
 #blog-create {
@@ -442,152 +440,153 @@ html, body {
 .blg-story span {
   border: none;
   outline: none;
- text-align: start;
- padding: 5px;
- font-size: 15px;
-font-family: 'Gelasio', serif;
-/* font-family: 'Poppins', sans-serif; */
-/* /* font-family: 'Sometype Mono', monospace; */
+  text-align: start;
+  padding: 5px;
+  font-size: 15px;
+  font-family: "Gelasio", serif;
+  /* font-family: 'Poppins', sans-serif; */
+  /* /* font-family: 'Sometype Mono', monospace; */
   color: #444;
 }
-.fa-plus{
+.fa-plus {
   margin-right: 10px;
   font-size: 12px;
 }
 
-#edit{
+#edit {
   width: 80%;
   margin: auto;
   margin-top: 40px;
 }
-.edits-profile h3{
-font-size: 14px;
+.edits-profile h3 {
+  font-size: 14px;
   font-family: sans-serif;
   color: #575757;
 }
-.updt-pro{
+.updt-pro {
   width: 100%;
   margin-top: 25px;
-   display: flex;
+  display: flex;
   align-items: start;
   gap: 20px;
 }
 
-.user-img{
+.user-img {
   width: 100%;
   height: 120px;
   border-radius: 50%;
 }
-.user-img img{
+.user-img img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 50%;
 }
 
-.updt-pro input{
+.updt-pro input {
   margin-top: 15px;
   cursor: pointer;
 }
 
-.update-details{
+.update-details {
   width: 70%;
 }
-.updt-image{
+.updt-image {
   width: 15%;
   text-align: center;
 }
 
 .custom-file-upload {
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    background: #eeeeee;
-    color: #444;
-    border: none;
-    border-radius: 4px;
-    margin-top: 15px;
-    text-align: center;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #eeeeee;
+  color: #444;
+  border: none;
+  border-radius: 4px;
+  margin-top: 15px;
+  text-align: center;
 }
 
 /* Style the label to look like a button */
 .custom-file-upload:hover {
-    background: #0056b3;
-    color: #fff;
+  background: #0056b3;
+  color: #fff;
 }
 
-.user-name{
+.user-name {
   width: 100%;
   display: flex;
- align-items: center;
- justify-content: space-between;
- gap: 10px;
- margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.user-name i{
+.user-name i {
   margin-right: 6px;
 }
 
-.user-name p{
+.user-name p {
   width: 80%;
   background-color: #eeeeee;
   padding: 10px;
   border-radius: 10px;
   font-size: 12px;
   font-family: sans-serif;
-   color: #575757;
+  color: #575757;
 }
 
-.updt-username p{
-width: 100%;
- background-color: #eeeeee;
+.updt-username p {
+  width: 100%;
+  background-color: #eeeeee;
   padding: 10px;
   border-radius: 10px;
   font-size: 12px;
   font-family: sans-serif;
-    color: #575757;
-    border: none;
-    outline: none;
+  color: #575757;
+  border: none;
+  outline: none;
 }
 
-.updt-username p span{
+.updt-username p span {
   margin-right: 10px;
 }
 
-.updt-info{
+.updt-info {
   margin-top: 8px;
   font-size: 11px;
   font-family: sans-serif;
   color: #575757;
   margin-left: 3px;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.updt-bio{
+.updt-bio {
   width: 100%;
 }
-.updt-bio-details{
+.updt-bio-details {
   background-color: #eeeeee;
   padding: 5px;
   height: 100px;
 }
-.updt-bio-details p{
+.updt-bio-details p {
   outline: none;
   border: none;
   font-size: 12px;
   font-family: sans-serif;
   color: #575757;
 }
-.updt-count{
+.updt-count {
   margin-top: 8px;
   font-size: 11px;
   font-family: sans-serif;
   color: #575757;
   margin-left: 3px;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.updt-social{
+.updt-social {
   margin-top: 20px;
 }
 .updt-pro p {
@@ -595,26 +594,25 @@ width: 100%;
   font-family: sans-serif;
   color: #575757;
   margin-left: 3px;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-.social-input{
+.social-input {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   align-items: center;
 }
 
-.social-input div{
+.social-input div {
   display: flex;
   align-items: center;
-    border-radius: 5px;
-    padding: 5px;
+  border-radius: 5px;
+  padding: 5px;
   background-color: #eeeeee;
   margin-bottom: 6px;
 }
 
-
-.social-input div div  p{
+.social-input div div p {
   margin: 0;
   outline: none;
   border: none;
@@ -638,7 +636,7 @@ width: 100%;
   color: #111111;
 } */
 
-#update{
+#update {
   margin-top: 15px;
   outline: none;
   border: none;
@@ -647,97 +645,97 @@ width: 100%;
   cursor: pointer;
   background-color: #111111;
   color: #fff;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-#update:active{
-scale: 0.9;
+#update:active {
+  scale: 0.9;
 }
 
-#change-pass{
+#change-pass {
   position: relative;
   width: 80%;
   margin: auto;
   margin-top: 40px;
 }
-.pop-up{
+.pop-up {
   display: none;
   position: absolute;
   left: 30%;
   top: -37%;
   z-index: 999;
   border: 1px solid #eeeeee;
-  background-color: #4CAF50;
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  animation: popUp 0.5s ease-in-out; 
+  background-color: #4caf50;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  animation: popUp 0.5s ease-in-out;
 }
-.pop-up p{
+.pop-up p {
   padding: 10px;
   font-size: 13px;
   font-family: sans-serif;
   font-weight: bold;
   color: #fff;
 }
-.pop-up p i{
-  color:#fff ;
+.pop-up p i {
+  color: #fff;
   font-size: 15px;
   margin-right: 5px;
 }
- @keyframes popUp {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-.form-container h3{
+@keyframes popUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.form-container h3 {
   font-family: sans-serif;
   font-size: 14px;
   color: #7c7c7c;
 }
 
-#change-form{
+#change-form {
   width: 28%;
-margin-top: 20px;
-position: relative;
+  margin-top: 20px;
+  position: relative;
 }
-#change-form div i{
+#change-form div i {
   position: absolute;
   margin-top: 12px;
   margin-left: 10px;
   font-size: 12px;
 }
-#change-form input{
-display: block;
-width: 100%;
-margin-top: 10px;
-padding: 12px;
-font-size: 11px;
-border-radius: 5px;
-outline: none;
-border: none;
-background-color: #eeeeee;
+#change-form input {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 11px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: #eeeeee;
 }
 
-#change-form input[type="password"]{
+#change-form input[type="password"] {
   padding-left: 30px;
   color: #444;
 }
 
-#change-form input:nth-child(3){
-width: 50%;
-margin-top: 15px;
-padding: 10px 10px;
-border-radius: 30px;
-background-color: #111111;
-color: #fff;
-transition: all .3s ease-in-out;
-cursor: pointer;
+#change-form input:nth-child(3) {
+  width: 50%;
+  margin-top: 15px;
+  padding: 10px 10px;
+  border-radius: 30px;
+  background-color: #111111;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
-#change-form input:nth-child(3):active{
+#change-form input:nth-child(3):active {
   scale: 0.9;
 }
 
@@ -746,12 +744,13 @@ cursor: pointer;
   position: absolute;
   top: 80%;
   left: 55%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: fit-content;
   font-weight: bold;
   font-family: monospace;
   font-size: 30px;
-  background: radial-gradient(circle closest-side,#000 94%,#0000) right/calc(200% - 1em) 100%;
+  background: radial-gradient(circle closest-side, #000 94%, #0000)
+    right/calc(200% - 1em) 100%;
   animation: l24 1s infinite alternate linear;
 }
 
@@ -760,17 +759,16 @@ cursor: pointer;
   line-height: 1em;
   color: #0000;
   background: inherit;
-  background-image: radial-gradient(circle closest-side,#fff 94%,#000);
+  background-image: radial-gradient(circle closest-side, #fff 94%, #000);
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 @keyframes l24 {
   100% {
-    background-position: left
+    background-position: left;
   }
 }
-
 
 .particle-container {
   position: fixed; /* or absolute, depending on your layout */
@@ -802,9 +800,3 @@ cursor: pointer;
     transform: scale(2);
   }
 }
-
-
-
-
-
-
