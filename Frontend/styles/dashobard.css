@@ -784,17 +784,29 @@ body {
   }
 }
 
-.fa-youtube :hover{
-color: red;
+.fa-youtube:hover {
+  color: red;
+  cursor: pointer;
 }
 
-.fa-instagram:hover{
-  color: #E91E63;
+.fa-instagram:hover {
+  color: #e91e63;
+  cursor: pointer;
 }
 
-.fa-facebook:hover{
-  color: #3F51B5;
+.fa-facebook:hover {
+  color: #3f51b5;
+  cursor: pointer;
 }
-.fa-twitter:hover{
-  color: #1E88E5;
+.fa-twitter:hover {
+  color: #1e88e5;
+  cursor: pointer;
+}
+.fa-github:hover{
+  color: #444;
+  cursor: pointer;
+}
+.fa-link:hover{
+   color: #5e5e5e;
+  cursor: pointer;
 }
