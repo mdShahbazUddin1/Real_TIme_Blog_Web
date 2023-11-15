@@ -96,7 +96,7 @@ async function leftFunction(data, blogSection, isFirstLoad = true) {
     )}`;
 
     userDetails.addEventListener("click", () => {
-      window.location.href = `profile.html?id=${blog.author._id}`;
+      window.location.href = `./pages/profile.html?id=${blog.author._id}`;
     });
 
     let blogDetails = document.createElement("div");
