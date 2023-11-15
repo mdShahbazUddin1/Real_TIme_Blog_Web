@@ -619,23 +619,6 @@ body {
   cursor: pointer;
 }
 
-/* .social-input p{
-  outline: none;
-   background-color: #eeeeee;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-family: sans-serif;
-  min-width: 20px; 
-    border: 1px solid #ccc; 
-    display: inline-block;
-  
-}
-.social-input p i{
-  margin-right: 20px;
-  color: #111111;
-} */
-
 #update {
   margin-top: 15px;
   outline: none;
@@ -799,4 +782,19 @@ body {
     opacity: 0;
     transform: scale(2);
   }
+}
+
+.fa-youtube :hover{
+color: red;
+}
+
+.fa-instagram:hover{
+  color: #E91E63;
+}
+
+.fa-facebook:hover{
+  color: #3F51B5;
+}
+.fa-twitter:hover{
+  color: #1E88E5;
 }
