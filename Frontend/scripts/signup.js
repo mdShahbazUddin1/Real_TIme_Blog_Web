@@ -1,7 +1,16 @@
-// This is your modified JavaScript code using iziToast
-
-
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Include Firebase auth from CDN
+import { firebaseApp, googleAuthProvider } from "./firebase.js"; // Import your Firebase setup
+const loginWithGoogle = document.getElementById("googleLogin");
 const form = document.getElementById("login");
+const nofiDiv = document.querySelector(".notification");
+const profileDiv = document.querySelector(".profile");
+const signinDiv = document.querySelector(".signin");
+const signupDiv = document.querySelector(".signup");
+const rightNavDiv = document.querySelector(".rightNav");
 const BASEURL = `https://real-time-bm7c.onrender.com`;
 
 form.addEventListener("submit", (e) => {
@@ -70,12 +79,54 @@ const register = async () => {
       }, 2000);
     }
   } catch (error) {
-     iziToast.error({
-        title: "Internal Error",
-        message: error,
-      })
+    iziToast.error({
+      title: "Internal Error",
+      message: error,
+    });
   }
 };
+loginWithGoogle.addEventListener("click", async () => {
+  try {
+    const auth = getAuth(firebaseApp); // Initialize the auth service
+
+    // Configure GoogleAuthProvider with the prompt option
+    const googleAuthProvider = new GoogleAuthProvider();
+    googleAuthProvider.setCustomParameters({
+      prompt: "select_account",
+    });
+
+    const result = await signInWithPopup(auth, googleAuthProvider);
+    const user = result.user;
+
+    // You can now use the 'user' object, which contains information about the authenticated user
+    // console.log("Google login successful. User:", user);
+    const access_token = user.stsTokenManager.accessToken;
+    const response = await fetch(`${BASEURL}/user/googleAuth`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ access_token }),
+    });
+    const data = await response.json();
+
+    // Handle the response from your API here
+    if (response.status === 200) {
+      (nofiDiv.style.display = "block"), (profileDiv.style.display = "block");
+      signinDiv.style.display = "none";
+      signupDiv.style.display = "none";
+      rightNavDiv.style.width = "18%";
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("token", data.token);
+      window.location.href = "../index.html";
+      // console.log("Login with your API successful.");
+    } else {
+      console.error("API login error:", response.status);
+    }
+  } catch (error) {
+    console.error("Google login error:", error);
+  }
+});
 
 function validateEmail(email) {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -87,5 +138,3 @@ function validatePassword(password) {
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
   return passwordRegex.test(password);
 }
-
-
