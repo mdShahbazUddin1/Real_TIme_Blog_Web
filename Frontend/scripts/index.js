@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 // Function to check if the user is logged in
 const isLoggedIn = async () => {
-  return !!localStorage.getItem("token"); // Check if the token exists in local storage
+  return !!localStorage.getItem("token");
 };
 
 // Handle redirection if not logged in
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const loggedIn = await isLoggedIn(); // Check the login status
   if (!loggedIn) {
     // Redirect to the login page
-    window.location.href = "./pages/signin.html"; // Replace with the actual login page URL
+    window.location.href = "./pages/signup.html";
   }
 });
 
